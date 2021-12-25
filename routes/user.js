@@ -1,3 +1,4 @@
+const CryptoJS = require("crypto-js");// hash password
 const User = require("../models/User");
 const {
   verifyToken,
@@ -52,6 +53,7 @@ router.get("/find/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //GET ALL USER
+// optional query param: new(boolean)
 router.get("/", verifyTokenAndAdmin, async (req, res) => {
   const query = req.query.new;
   try {
@@ -65,17 +67,20 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //GET USER STATS
-
+//this method return how many user was created 
+//in each months since one year ago
 router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
   const date = new Date();
   const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
 
   try {
+    //aggregate lookalike sql group
     const data = await User.aggregate([
       { $match: { createdAt: { $gte: lastYear } } },
       {
         $project: {
           month: { $month: "$createdAt" },
+          year:  { $year: "$createdAt" }
         },
       },
       {
