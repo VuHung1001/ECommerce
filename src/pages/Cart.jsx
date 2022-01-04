@@ -4,6 +4,13 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from '../responsive';
+import {useSelector} from 'react-redux'
+import StripeCheckout from 'react-stripe-checkout'
+import { useEffect, useState } from 'react';
+import {useNavigate} from 'react-router-dom'
+import {userRequest} from '../requestMethods'
+
+const KEY = process.env.REACT_APP_STRIPE
 
 const Container = styled.div`
 
@@ -51,7 +58,9 @@ const Bottom = styled.div`
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
-    ${mobile({flexDirection: 'column'})}
+    @media only screen and (max-width: 800px){
+        flex-direction: column;
+    }
 `
 const Info = styled.div`
     flex: 3;
@@ -60,14 +69,18 @@ const Info = styled.div`
 const Product = styled.div`
     display: flex;
     justify-content: center;
-    ${mobile({flexDirection: 'column'})}
+    @media only screen and (max-width: 950px){
+        flex-direction: column;
+    }
 `
 const ProductDetail = styled.div`
     flex: 2;
     display: flex;
+    max-height: 33vh;
 `
 const Image = styled.img`
-    width: 50%;
+    width: 33.3%;
+    // height: 100%;
     object-fit: cover;
 `
 const Details = styled.div`
@@ -78,8 +91,9 @@ const Details = styled.div`
 `
 const ProductName = styled.span``
 const ProductId = styled.span``
-const ProductScale = styled.span``
 const ProductType = styled.span``
+const ProductPrice = styled.span``
+
 const PriceDetail = styled.div`
     flex: 1;
     display: flex;
@@ -87,19 +101,20 @@ const PriceDetail = styled.div`
     align-items: center;
     justify-content: center;
 `
-const ProductAmountContainer = styled.div`
+const ProductQuantityContainer = styled.div`
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin: 15px 0px 10px 0px;
 `
-const ProductAmount = styled.div`
+const ProductQuantity = styled.div`
     font-size: 24px;
-    margin: 5px;
+    margin: 0px 10px;
     ${mobile({margin: '5px 30px'})}
 `
-const ProductPrice = styled.div`
+const ProductAmount = styled.div`
     font-size: 30px;
     font-weight: 200;
+    margin-bottom: 10px;
     ${mobile({marginBottom: '20px'})}
 `
 
@@ -107,6 +122,7 @@ const Hr = styled.hr`
     background-color: #eee;
     border: none;
     height: 1px;
+    margin: 10px 0px;
 `
 const Summary = styled.div`
     flex: 1;
@@ -148,6 +164,57 @@ const Button = styled.button`
 `
 
 const Cart = () => {
+    const cart = useSelector(state => state.cart)
+    const [stripeToken, setStripeToken] = useState(null)
+    const navigate = useNavigate();
+
+    const onToken = (token)=> {
+        setStripeToken(token)
+    }
+
+    useEffect(()=> {
+        const makeRequest = async () => {
+            try{
+                const res = await userRequest.post(
+                    "/checkout/payment",
+                    {
+                        tokenId: stripeToken.id,
+                        amount: cart.total,
+                    }
+                )
+                navigate('/success', {state: {
+                    stripeData: res.data,
+                    cart
+                }})
+            } catch(err) {
+                console.log(err)
+            }
+        }
+
+        stripeToken && makeRequest();
+
+        // use fetch
+
+        // if(stripeToken){
+        //     const requestOptions = {
+        //         method: 'POST',
+        //         headers: { 'Content-Type': 'application/json' },
+        //         body: JSON.stringify(
+        //             {
+        //                 tokenId: stripeToken.id,
+        //                 amount: cart.total,
+        //             }                
+        //         )
+        //     };
+        //     fetch('http://localhost:5000/api/checkout/payment', requestOptions)
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             console.log(data)
+        //             navigate('/success', {data})  
+        //         }); 
+        // }        
+    }, [stripeToken, cart, navigate])
+
     return (
         <Container>
             <Navbar />
@@ -164,65 +231,61 @@ const Cart = () => {
                 </Top>
                 <Bottom>
                     <Info>
-                        <Product>
+                        {cart.products.map(product => (
+                        <div key={product._id}>
+                        <Product >
                             <ProductDetail>
-                                <Image src="https://thegioimohinh.vn/wp-content/uploads/2019/05/ed20ac7b42e0c479762510a0776c8483-800x800.jpg"/>
+                                <Image src={product.img}/>
                                 <Details>
-                                    <ProductName><b>Product: </b> OPTIMUS PRIME</ProductName>
-                                    <ProductId><b>ID: </b>12374192837</ProductId>
-                                    <ProductScale><b>Scale: </b>1:30</ProductScale>
-                                    <ProductType><b>Type: </b>Transformers</ProductType>
+                                    <ProductName><b>Product: </b>{product.title}</ProductName>
+                                    <ProductId><b>ID: </b><p>{product._id}</p></ProductId>
+                                    <ProductType><b>Type: </b>{product.category}</ProductType>
+                                    <ProductPrice><b>Price: </b> {product.price}</ProductPrice>
                                 </Details>
                             </ProductDetail>
                             <PriceDetail>
-                                <ProductAmountContainer>
+                                <ProductQuantityContainer>
                                     <Remove/>
-                                    <ProductAmount>2</ProductAmount>
+                                    <ProductQuantity>{product.quantity}</ProductQuantity>
                                     <Add/>
-                                </ProductAmountContainer>
-                                <ProductPrice>$ 100</ProductPrice>
+                                </ProductQuantityContainer>
+                                <ProductAmount>{product.price * product.quantity} VND</ProductAmount>
                             </PriceDetail>
                         </Product>
                         <Hr/>
-                        <Product>
-                            <ProductDetail>
-                                <Image src="https://thegioimohinh.vn/wp-content/uploads/2019/05/ed20ac7b42e0c479762510a0776c8483-800x800.jpg"/>
-                                <Details>
-                                    <ProductName><b>Product: </b> OPTIMUS PRIME</ProductName>
-                                    <ProductId><b>ID: </b>12374192837</ProductId>
-                                    <ProductScale><b>Scale: </b>1:30</ProductScale>
-                                    <ProductType><b>Type: </b>Transformers</ProductType>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Remove/>
-                                    <ProductAmount>2</ProductAmount>
-                                    <Add/>
-                                </ProductAmountContainer>
-                                <ProductPrice>$ 100</ProductPrice>
-                            </PriceDetail>
-                        </Product>
+                        </div>
+                        ))}
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                         <SummaryItem>
                             <SummaryItemText>Subtotal</SummaryItemText>
-                            <SummaryItemPrice>$ 200</SummaryItemPrice>
+                            <SummaryItemPrice>{cart.total} VND</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>Estimated Shipping</SummaryItemText>
-                            <SummaryItemPrice>$ 5.0</SummaryItemPrice>
+                            <SummaryItemPrice>20000 VND</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>Shipping Discount</SummaryItemText>
-                            <SummaryItemPrice>$ -5.0</SummaryItemPrice>
+                            <SummaryItemPrice>-20000 VND</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem type="total">
                             <SummaryItemText>Total</SummaryItemText>
-                            <SummaryItemPrice>$ 200</SummaryItemPrice>
+                            <SummaryItemPrice>{cart.total} VND</SummaryItemPrice>
                         </SummaryItem>
-                        <Button>CHECKOUT NOW</Button>
+                        <StripeCheckout 
+                            name="Figure shop"
+                            image="https://blog.logomyway.com/wp-content/uploads/2021/08/transformer-logo.jpg"
+                            billingAddress
+                            shippingAddress
+                            description={`Your total amount is ${cart.total} VND`}
+                            amount={cart.total}
+                            token={onToken}
+                            stripeKey={KEY}
+                        >
+                            <Button>CHECKOUT NOW</Button>
+                        </StripeCheckout>
                     </Summary>
                 </Bottom>
             </Wrapper>

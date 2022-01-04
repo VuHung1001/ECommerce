@@ -31,12 +31,12 @@ export const categories = [
     {
         id: 2,
         img: "https://loremflickr.com/320/240/dc-comic",
-        title: "DC-Comic",
+        title: "DC-Comics",
     },
     {
         id: 3,
         img: "https://loremflickr.com/320/240/car",
-        title: "Transformer",
+        title: "Transformers",
     },
 ];
 

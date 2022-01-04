@@ -1,10 +1,16 @@
 import { Add, Remove } from '@material-ui/icons'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import Announcement from '../components/Announcement'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import Newsletter from '../components/Newsletter'
+import { addProduct } from '../redux/cartRedux'
+import { publicRequest } from '../requestMethods'
 import { mobile } from '../responsive'
+import {useDispatch} from 'react-redux'
 
 const Container = styled.div`
 
@@ -28,12 +34,16 @@ const InfoContainer = styled.div`
     flex: 1;
     padding: 0px 50px;
     ${mobile({ padding: '10px'})}
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `
 const Title = styled.h1`
     font-weight: 200;
 `
 const Desc = styled.p`
-    margin: 20px 0px;
+    margin: 10px 0px;
 `
 const Price = styled.span`
     font-weight: 100;
@@ -42,40 +52,45 @@ const Price = styled.span`
 
 const OptionContainer = styled.div`
     width: 100%; 
-    margin: 30px 0px;
+    // margin: 30px 0px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 `
-const FilterContainer = styled.div`
-    display: flex;
-    align-items: center;
-    flex: 1;
-`
-const FilterTitle = styled.span`
-    font-size: 20px;
-    font-weight: 200;
-`
-const FilterSelect= styled.select`
-    cursor: pointer;
-    margin-left: 10px;
-    padding: 5px;
-`
-const FilterOption= styled.option`
+// const FilterContainer = styled.div`
+//     display: flex;
+//     align-items: center;
+//     flex: 1;
+// `
+// const FilterTitle = styled.span`
+//     font-size: 20px;
+//     font-weight: 200;
+// `
+// const FilterSelect= styled.select`
+//     cursor: pointer;
+//     margin-left: 10px;
+//     padding: 5px;
+// `
+// const FilterOption= styled.option`
 
-`
+// `
 
 const AddContainer= styled.div`
-    margin: 20px 0px;
+    // margin: 20px 0px;
     display: flex;
     align-items: center;
     flex:1;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: center;
 `
 const AmountContainer= styled.div`
     display: flex;
     align-items: center;
     font-weight: 700;
+    padding: 15px 5px 15px 0px;
+    @media only screen and (max-width: 700px){
+        padding: 15px 0px;
+    }
 `
 const Amount= styled.span`
     width: 30px;
@@ -101,29 +116,52 @@ const Button= styled.button`
 `
 
 const Product = () => {
+    const location = useLocation();
+    const id = location.pathname.split('/')[2]
+    const [product, setProduct] = useState({})
+    const [quantity, setQuantity] = useState(1)
+    const dispatch = useDispatch();
+
+    useEffect(()=> {
+        const getProduct = async() => {
+            try{
+                const res = await publicRequest.get('/products/find/'+id)
+                setProduct(res.data)
+            } catch(err) {
+                console.dir(err)
+            }
+        }
+        getProduct()
+    }, [id])
+
+    const handleQuantity = (type) =>{
+        if(type === 'asc')
+            setQuantity(quantity +1)
+        if(type === 'desc')
+            quantity > 1 && setQuantity(quantity -1)
+    }
+
+    const addToCart = ()=>{
+        dispatch(addProduct({...product, quantity}))
+    }
+
     return (
         <Container>
             <Navbar/>
             <Announcement/>
             <Wrapper>
                 <ImgContainer>
-                    <Image src="https://loremflickr.com/320/240/life"/>
+                    <Image src={product.img}/>
                 </ImgContainer>
                 <InfoContainer>
-                    <Title>Super car</Title>
+                    <Title>{product.title}</Title>
                     <Desc>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
-                    nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat 
-                    nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        {product.desc}
                     </Desc>
-                    <Price>$ 20</Price>
+                    <Price>{product.price} VND</Price>
 
                     <OptionContainer>
-                        <FilterContainer>
+                        {/* <FilterContainer>
                             <FilterTitle>Scale</FilterTitle>
                             <FilterSelect>
                                 <FilterOption>1:10</FilterOption>
@@ -131,15 +169,15 @@ const Product = () => {
                                 <FilterOption>1:30</FilterOption>
                                 <FilterOption>1:50</FilterOption>
                             </FilterSelect>
-                        </FilterContainer>
+                        </FilterContainer> */}
 
                         <AddContainer>
                             <AmountContainer>
-                                <Remove/>
-                                <Amount>1</Amount>
-                                <Add/>
+                                <Remove onClick ={()=> handleQuantity('desc')}/>
+                                <Amount>{quantity}</Amount>
+                                <Add onClick ={()=> handleQuantity('asc')}/>
                             </AmountContainer>
-                            <Button>ADD TO CART</Button>
+                            <Button onClick={addToCart}>ADD TO CART</Button>
                         </AddContainer>
                     </OptionContainer>
 

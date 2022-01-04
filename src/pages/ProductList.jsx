@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -31,40 +33,87 @@ const Select = styled.select`
 `
 const Option = styled.option``
 
+
 const ProductList = () => {
+    const location = useLocation();
+    const categoryPath = location.pathname.split('/')[2]
+    const selectRef = useRef();
+    
+    const [filters, setFilters] = useState({
+        category: categoryPath ? categoryPath : 'All Products',
+        sort: 'Newest',
+    });
+
+    //change url by category without redirect or reload page
+    if(filters.category){
+        let pathName = filters.category === 'All Products' ? '' : '/'+filters.category;
+        window.history.pushState("", "", '/products'+pathName);
+    }
+
+    useEffect(()=>{
+        const select = selectRef.current;
+        const options = select.options;
+        
+        for(let i=0;i<options.length;i++){
+
+            if(options[i].innerText === filters.category){
+                options.selectedIndex = i;
+                break;
+            }
+
+            if(i === options.length-1){
+                setFilters({
+                    ...filters,
+                    category: 'All Products'
+                })
+            }
+        }
+    }, [filters])
+    
+    const handleFilters = (e) => {
+            setFilters({
+                ...filters,
+                [e.target.name]: e.target.value
+            })
+    }
+    
     return (
         <Container>
             <Navbar />
             <Announcement />
-            <Title>Models</Title>
+            <Title>{filters.category}</Title>
             <FilterContainer>
                 <Filter>
-                    <FilterText>Filter Products:</FilterText>
-                    <Select>
-                        <Option disabled defaultValue>Universe</Option>
-                        <Option>Transformer</Option>
+                    <FilterText>Categories:</FilterText>
+                    <Select 
+                        name="category" 
+                        onChange={handleFilters}
+                        ref={selectRef}
+                    >
+                        <Option>All Products</Option>
+                        <Option>Transformers</Option>
                         <Option>Marvel</Option>
-                        <Option>DC-comic</Option>
+                        <Option>DC-Comics</Option>
                     </Select>
-                    <Select>
+                    {/* <Select onChange={handleFilters}>
                         <Option disabled defaultValue>Scale</Option>
                         <Option>1:20</Option>
                         <Option>1:30</Option>
                         <Option>1:50</Option>
-                    </Select>
+                    </Select> */}
                 </Filter>
                 <Filter>
                     <FilterText>Sort Products:</FilterText>
-                    <Select>
-                        <Option defaultValue>Newest</Option>
-                        <Option>Price (asc)</Option>
-                        <Option>Price (desc)</Option>
-                        <Option>Bestseller</Option>
-                        <Option>Top rated</Option>
+                    <Select name="sort" onChange={handleFilters}>
+                        <Option value="newest" defaultValue>Newest</Option>
+                        <Option value="asc">Price (asc)</Option>
+                        <Option value="desc">Price (desc)</Option>
+                        {/* <Option value="bestseller">Bestseller</Option>
+                        <Option value="toprated">Top rated</Option> */}
                     </Select>
                 </Filter>
             </FilterContainer>
-            <Products />
+            <Products filters={filters} />
             <Newsletter />
             <Footer />
         </Container>
