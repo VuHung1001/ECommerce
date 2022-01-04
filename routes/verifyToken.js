@@ -30,7 +30,6 @@ const verifyTokenAndAuthorization = (req, res, next) => {
   });
 };
 
-
 // check user is admin or not
 const verifyTokenAndAdmin = (req, res, next) => {
   verifyToken(req, res, () => {

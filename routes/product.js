@@ -46,7 +46,7 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
-//GET PRODUCT
+//GET PRODUCT BY ID
 router.get("/find/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -58,19 +58,35 @@ router.get("/find/:id", async (req, res) => {
 
 //GET ALL PRODUCTS
 router.get("/", async (req, res) => {
-  const qNew = req.query.new;
+  const qSort = req.query.sort;
   const qCategory = req.query.category;
+  let sort;
+  let category;
+  
+  switch (qSort) {
+    case "desc":
+      sort = { price: -1 }
+      break;
+    case "asc":
+      sort = {price: 1}
+      break;
+    default:
+      sort = { createdAt: -1 }
+      break;
+  }
+
   try {
     let products;
 
-    if (qNew) {
-      products = await Product.find().sort({ createdAt: -1 }).limit(1);
-    } else if (qCategory) {
-      products = await Product.find({
-        categories: {
-          $in: [qCategory],
-        },
-      });
+    if(qSort || qCategory){
+      products = await Product.find(
+        qCategory === 'All Products' ? {} 
+          : {
+            category: {
+              $in: [qCategory],
+            },
+          }
+      ).sort(sort);
     } else {
       products = await Product.find();
     }
