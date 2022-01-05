@@ -30,7 +30,7 @@ app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/checkout", stripeRoute);
 
-if(process.env.NODE_ENV !== 'production'){
+if(process.env.NODE_ENV === 'production'){
     app.use(express.static(path.resolve(__dirname, "./Client-ECommerce/build")));
 
     app.get('*', (req, res) => {

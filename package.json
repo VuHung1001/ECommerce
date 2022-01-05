@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix ./Client-ECommerce && npm run build ./Client-ECommerce"
+    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false yarn install --prefix ./Client-ECommerce && yarn run build ./Client-ECommerce"
   },
   "keywords": [],
   "author": "",
