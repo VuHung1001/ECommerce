@@ -5,4 +5,3 @@
 .env.production.local
 node_modules
 .vscode
-build
