@@ -13,9 +13,6 @@ import {
   Navigate
 } from "react-router-dom";
 
-//demo react stripe
-// import Pay from "./demoReactStripe/Pay";
-// import Success from "./demoReactStripe/Success";
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
@@ -37,17 +34,6 @@ const App = () => {
         <Route path="*" element={<Navigate to='/'/>}/>
       </Switch>
     </Router>
-
-
-    // <>
-    // <h1>Demo React Stripe</h1>
-    // <Router>
-    //   <Switch>
-    //     <Route path="/pay" element={<Pay/>}/>
-    //     <Route path="/success" element={<Success/>}/>
-    //   </Switch>
-    // </Router>
-    // </>
   )
 };
 
