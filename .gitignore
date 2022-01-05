@@ -5,3 +5,4 @@
 .env.production.local
 node_modules
 .vscode
+/yarn.lock

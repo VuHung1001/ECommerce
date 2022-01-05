@@ -5,11 +5,11 @@
   "main": "index.js",
   "engines": {
     "node": "16.13.1",
-    "yarn": "1.22.17"
+    "npm": "8.3.0"
   },
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false yarn install --prefix ./Client-ECommerce && yarn run build ./Client-ECommerce"
+    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix ./Client-ECommerce && npm run build ./Client-ECommerce"
   },
   "keywords": [],
   "author": "",
