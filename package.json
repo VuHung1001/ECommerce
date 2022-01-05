@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "16.13.1",
+    "npm": "8.3.0"
+  },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix ./Client-ECommerce && npm run build ./Client-ECommerce"
   },
   "keywords": [],
   "author": "",
