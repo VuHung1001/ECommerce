@@ -30,12 +30,20 @@ app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/checkout", stripeRoute);
 
+// process.env.NODE_ENV = 'production';// for developing stage
+
 if(process.env.NODE_ENV === 'production'){
     app.use(express.static(path.resolve(__dirname, "./Client-ECommerce/build")));
-
+    app.use(express.static(path.resolve(__dirname, "./Admin-ECommerce/build")));
+    
+    app.get('/admin', (req, res) => {
+        res.sendFile(path.resolve(__dirname, './Admin-ECommerce/build', 'index.html'));
+    });
+    
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, './Client-ECommerce/build', 'index.html'));
     });
+
 }
 
 app.listen(process.env.PORT || 5000, () => {
