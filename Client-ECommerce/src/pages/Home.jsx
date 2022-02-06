@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Announcement from '../components/Announcement'
 import Categories from '../components/Categories'
 import Footer from '../components/Footer'
@@ -8,10 +9,17 @@ import Slider from '../components/Slider'
 
 
 const Home = () => {
+    useEffect(()=>{
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        }); 
+    }, [])
+    
     return (
         <div>
-            <Announcement/>
             <Navbar/>
+            <Announcement/>
             <Slider/>
             <Categories/>
             <Products/>

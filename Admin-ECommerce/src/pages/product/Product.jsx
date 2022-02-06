@@ -48,7 +48,7 @@ export default function Product() {
           ])
         );
       } catch (err) {
-        console.log(err);
+        console.dir(err);
       }
     };
     getStats();

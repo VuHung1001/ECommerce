@@ -1,6 +1,9 @@
 import { Send } from '@material-ui/icons'
 import styled from 'styled-components'
+import {useState} from 'react'
 import { mobile } from '../responsive'
+import TextField from "@mui/material/TextField"
+import { publicRequest } from '../requestMethods'
 
 const Container = styled.div`
     height: 60vh;
@@ -21,22 +24,26 @@ const Description = styled.div`
     ${mobile({textAlign: 'center'})}
 `
 const InputContainer = styled.div`
-    width: 50%;
+    width: 40%;
     height: 40px;
-    background-color: white;
+    background-color: #fcf5f5;
     display: flex;
-    justify-content: space-between;
-    border: 1px solid lightgray;
+    justify-content: center;
+    align-items: center;
+    ${'' /* border: 1px solid lightgray; */}
     ${mobile({width: '80%'})}
 `
-const Input = styled.input`
-    border: none;
-    flex: 8;
-    padding-left: 20px;
-`
+// const Input = styled.input`
+//     border: none;
+//     flex: 8;
+//     padding-left: 20px;
+// `
 const Button = styled.button`
-    flex: 1;
+    margin-left: 10px;
+    height: 50px;
+    width: 15%;
     border: none;
+    border-radius: 5px;
     background-color: teal;
     color: white;
     cursor: pointer;
@@ -50,13 +57,50 @@ const Button = styled.button`
     }
 `
 const Newsletter = () => {
+    const [hasError, setHasError] = useState(false)
+    
+    const handleMail = async () => {
+        const mailInput = document.querySelector('#user-mail');
+        const emailRegex = new RegExp(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i)
+
+        if(!emailRegex.test(mailInput.value)){
+            setHasError(true)
+            mailInput.focus()
+        }else{
+            setHasError(false)
+            
+            try{
+                const res = publicRequest.post('/mail', {userMail: mailInput.value})
+                if(res){
+                    window.alert('We sent a mail to your email, thanks for trusted our service')
+                    mailInput.value=''
+                }
+            } catch(e) {
+                console.dir(e)
+                window.alert('An error has occurred, sorry for this inconvenience')
+            }
+        }
+    }
+
     return (
         <Container>
             <Title>Newsletter</Title>
             <Description>Get timely updates from your favorite products.</Description>
             <InputContainer>
-                <Input placeholder="Your email"/>
-                <Button>
+                <TextField
+                    required
+                    id="user-mail"
+                    label="Your Mail"
+                    variant="filled"
+                    color= {hasError ? 'error' : "primary"}
+                    error = {hasError}
+                    helperText={
+                        hasError 
+                        ? "Your inputted mail wasn't correct yet. Email example: abc@mail.com" 
+                        : ''
+                    }
+                />
+                <Button onClick={handleMail}>
                     <Send/>
                 </Button>
             </InputContainer>

@@ -48,7 +48,7 @@ export default function WidgetLg() {
             <td className="widgetLgDate">{
               timeAgo.format(new Date(order.createdAt), 'round')
             }</td>
-            <td className="widgetLgAmount">{order.amount} VND</td>
+            <td className="widgetLgAmount">{order.amount} &#8363;</td>
             <td className="widgetLgStatus">
               <Button status={order.status} />
             </td>

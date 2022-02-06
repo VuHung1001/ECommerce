@@ -5,6 +5,7 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Success from "./pages/Success";
+import Momo from "./pages/MomoResult";
 import { useSelector} from 'react-redux'
 import {
   BrowserRouter as Router,
@@ -12,6 +13,8 @@ import {
   Route,
   Navigate
 } from "react-router-dom";
+import './App.css'
+import Account from "./pages/Account";
 
 
 const App = () => {
@@ -29,8 +32,11 @@ const App = () => {
         <Route exact path="/register" element={
           user ? <Navigate to="/" /> : <Register/>
         }/>
+        <Route exact path="/logout" element={<Home/>}/>
         <Route exact path="/cart" element={<Cart/>}/>
+        <Route exact path="/account" element={<Account/>}/>
         <Route exact path="/success" element={<Success/>}/>
+        <Route exact path="/resultMomo" element={<Momo/>}/>
         <Route path="*" element={<Navigate to='/'/>}/>
       </Switch>
     </Router>

@@ -1,0 +1,22 @@
+.MuiOutlinedInput-root.MuiInputBase-root.MuiInputBase-colorPrimary.MuiInputBase-fullWidth.MuiInputBase-formControl.MuiInputBase-adornedEnd.MuiAutocomplete-inputRoot{
+  padding: 0px;
+}
+/* parent search div of label */
+.MuiFormControl-root.MuiFormControl-fullWidth.MuiTextField-root{
+  position: relative;
+}
+/* search label */
+.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-outlined.MuiFormLabel-root.MuiFormLabel-colorPrimary {
+  position: absolute;
+  top: -9px;
+}
+
+@media only screen and (max-width: 700px){
+  #search-products{
+    padding: 0px;
+  }
+
+  .MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-outlined.MuiFormLabel-root.MuiFormLabel-colorPrimary{
+    display: none !important;
+  }
+}

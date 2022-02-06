@@ -1,6 +1,9 @@
 import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@material-ui/icons'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { addProduct } from '../redux/cartRedux'
+import { mobile } from '../responsive'
 
 const Info = styled.div`
     opacity: 0;
@@ -19,15 +22,17 @@ const Info = styled.div`
 `
 
 const Container = styled.div`
-    flex: 1;
+    flex: 1 ${(props) => props.page && '26%'};
     margin: 5px;
-    min-width: 280px;
-    height: 350px;
+    min-width: 20%;
+    max-width: 360px;
+    height: 360px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #f5fbfd;
     position: relative;
+    ${mobile({ minWidth: '100%' })}
 
     &:hover ${Info}{
         opacity: 1
@@ -43,8 +48,8 @@ const Circle = styled.div`
 `
 
 const Image = styled.img`
-    height: 75%;
-    width: 75%;
+    height: 80%;
+    width: 80%;
     object-fit: cover;
     z-index: 2;
 `
@@ -66,12 +71,20 @@ const Icon= styled.div`
 `
 
 const Product = ({item}) => {
+    const dispatch = useDispatch();
+    const currentPage = window.location.href.split('/')[3];
+    
+    const addToCart = ()=>{
+        const quantity = 1;
+        dispatch(addProduct({...item, quantity}))
+    }
+
     return (
-        <Container>
+        <Container page={currentPage}>
             <Circle/>
-            <Image src={item.img}/>
+            <Image src={item.img[0]}/>
             <Info>
-                <Icon>
+                <Icon onClick={addToCart}>
                     <ShoppingCartOutlined/>
                 </Icon>
                 <Icon>

@@ -56,12 +56,32 @@ router.get("/find/:id", async (req, res) => {
   }
 });
 
+//find product by name
+router.post("/find", async (req, res) => {
+  const name = req.body.name;
+  try {
+    const products = await Product.find(
+      {$or:[
+        {"title":
+          { $regex: new RegExp("^" + name, "i") } 
+        },
+        {'category':
+          { $regex: new RegExp("^" + name, "i") } 
+        }
+      ]}
+    );
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 //GET ALL PRODUCTS
 router.get("/", async (req, res) => {
   const qSort = req.query.sort;
   const qCategory = req.query.category;
+  let category = req.query.category ? req.query.category : 'All Products';
   let sort;
-  let category;
   
   switch (qSort) {
     case "desc":
@@ -80,10 +100,10 @@ router.get("/", async (req, res) => {
 
     if(qSort || qCategory){
       products = await Product.find(
-        qCategory === 'All Products' ? {} 
+        category === 'All Products' ? {} 
           : {
             category: {
-              $in: [qCategory],
+              $in: [category],
             },
           }
       ).sort(sort);

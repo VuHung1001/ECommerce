@@ -10,7 +10,8 @@ const authRoute = require("./routes/auth");// login ,register route
 const productRoute = require("./routes/product");
 const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
-const stripeRoute = require("./routes/stripe");// payment route
+const checkoutRoute = require("./routes/checkout");// payment route
+const mail = require("./routes/mail");// mail route
 const cors = require("cors");
 
 
@@ -18,7 +19,7 @@ mongoose
     .connect(process.env.MONGO_URL)
     .then(() => console.log("DB Connection Successfull!"))
     .catch((err) => {
-        console.log(err);
+        console.dir(err);
     });
 
 app.use(cors());
@@ -28,7 +29,8 @@ app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
-app.use("/api/checkout", stripeRoute);
+app.use("/api/checkout", checkoutRoute);
+app.use("/api/mail", mail);
 
 // process.env.NODE_ENV = 'production';// for developing stage
 

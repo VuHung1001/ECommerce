@@ -49,8 +49,13 @@ const ProductList = () => {
         let pathName = filters.category === 'All Products' ? '' : '/'+filters.category;
         window.history.pushState("", "", '/products'+pathName);
     }
-
+    
     useEffect(()=>{
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        
         const select = selectRef.current;
         const options = select.options;
         
@@ -79,7 +84,7 @@ const ProductList = () => {
     
     return (
         <Container>
-            <Navbar />
+            <Navbar category={filters?.category}/>
             <Announcement />
             <Title>{filters.category}</Title>
             <FilterContainer>

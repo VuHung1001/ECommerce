@@ -1,3 +1,4 @@
+import './category-item.css'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import {mobile} from '../responsive'
@@ -26,23 +27,27 @@ const Info = styled.div`
     justify-content: center;
 `
 const Title = styled.h1`
-    color: white;
+    color: black;
     margin-bottom: 20px;
 `
 const Button = styled.button`
     border:none;
     padding: 10px;
-    background-color: white;
-    color: gray;
+    background-color: gray;
+    color: white;
     cursor: pointer;
     font-weight: 600;
+    transition: all 0.5s ease;
+    &:hover {
+      transform: scale(1.1);
+    }
 `
 
 const CategoryItem = ({item}) => {
     return (
-        <Container>
+        <Container className="container">
             <Link to={`/products/${item.title}`}>
-            <Image src={item.img}/>
+            <Image src={item.img} className="img"/>
             <Info>
                 <Title>{item.title}</Title>
                 <Button>SHOP NOW</Button>

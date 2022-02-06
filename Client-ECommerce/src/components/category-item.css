@@ -1,0 +1,22 @@
+.container{
+  opacity: 1.0;
+}
+
+.container img{
+  opacity: 0.5;
+}
+
+.container button{
+  opacity: 0.0;
+}
+
+.container:hover div h1{
+  transition: all 0.6s ease;
+  opacity: 0.0;
+  color: grey;
+}
+
+.container:hover img, .container:hover button{
+  transition: all 0.6s ease;
+  opacity: 1.0;
+}
