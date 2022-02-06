@@ -12,10 +12,11 @@ const {
 
 const accessKey = process.env.MOMO_ACCESS_KEY;
 const secretKey = process.env.MOMO_SECRET_KEY;
+const BASE_URL = process.env.BASE_URL
 
 // use stripe api for payment handling
 router.post("/stripe", verifyToken, (req, res) => {
-  console.log(req.body.amount);
+  // console.log(req.body.amount);
   stripe.charges.create(
     {
       source: req.body.tokenId,
@@ -104,15 +105,15 @@ router.post("/momo", verifyToken, async (req, res) => {
   const address = JSON.stringify(req.body.address)
   
   // const BASE_URL = 'https://figures-shop-api.herokuapp.com';
-  const BASE_URL = "http://localhost:3000";
+  // const BASE_URL = "http://localhost:3000";
   const BASE_URL_API = "http://localhost:5000";
 
   var partnerCode = "MOMO0T1D20220107";
   var requestId = uuidv4();
   var orderId = new mongoose.Types.ObjectId();
   var orderInfo = "pay with MoMo";
-  var redirectUrl = BASE_URL+"/resultMomo";
-  var ipnUrl = 'http://localhost:5000/api/checkout/ipn/momo';
+  var redirectUrl = BASE_URL +"/resultMomo";
+  var ipnUrl = BASE_URL +'/api/checkout/ipn/momo';
   var requestType = "captureWallet";
   //pass empty value to extraData if your merchant does not have stores
   var extraData = cryptoJs.enc.Base64.stringify(
@@ -200,7 +201,7 @@ router.post("/momo", verifyToken, async (req, res) => {
   });
 
   request.on("error", (e) => {
-    console.log(`problem with request: ${e.message}`);
+    // console.log(`problem with request: ${e.message}`);
   });
   // write data to request body
   // console.log("Sending....");

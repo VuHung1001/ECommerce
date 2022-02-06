@@ -100,7 +100,7 @@ const Login = () => {
                         disabled={isFetching}
                     >LOGIN</Button>
                     {error && <Error>Somethings went wrong...</Error>}
-                    <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+                    <Link>DON'T REMEMBER THE PASSWORD?</Link>
                     <Link>CREATE A NEW ACCOUNT</Link>
                 </Form>
             </Wrapper>

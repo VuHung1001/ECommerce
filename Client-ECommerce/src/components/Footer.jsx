@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { Facebook, Instagram, Twitter, Pinterest, Room, Mail, Phone } from "@material-ui/icons";
 import { mobile } from "../responsive";
 import GoToTop from "./GoToTop";
-// import { useSelector } from "react-redux";
-// import { useEffect } from "react";
-// import { userRequest } from "../requestMethods";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { userRequest } from "../requestMethods";
 
 const Container = styled.div`
     display: flex;
@@ -71,25 +71,25 @@ const Payment = styled.img`
 `;
 
 const Footer = () => {
-    // const user = useSelector((state) => state.user)
+    const user = useSelector((state) => state.user)
 
-    // useEffect(()=>{
-    //     const getUserOrders = async()=>{
-    //         try {
-    //           const res = await userRequest.get("/orders/find/"+user?.currentUser?._id);
-    //         } catch (err) {
-    //         //   console.dir(err);
-    //           if(err.response.data === 'Token is not valid!'){
-    //               window.alert('You was not login or your login session is expired')
-    //           }
-    //           if(err.response.status === 401){
-    //               window.alert('You was not login')
-    //           }
-    //         }
-    //       }
+    useEffect(()=>{
+        const getUserOrders = async()=>{
+            try {
+              const res = await userRequest.get("/orders/find/"+user?.currentUser?._id);
+            } catch (err) {
+            //   console.dir(err);
+              if(err.response.data === 'Token is not valid!'){
+                  window.alert('You was not login or your login session is expired')
+              }
+              if(err.response.status === 401){
+                  window.alert('You was not login')
+              }
+            }
+          }
     
-    //       getUserOrders();        
-    // }, [user])
+          getUserOrders();        
+    }, [user])
 
     return (
         <Container>

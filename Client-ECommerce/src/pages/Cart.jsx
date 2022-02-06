@@ -274,7 +274,7 @@ const Cart = () => {
               <div key={product._id}>
                 <Product>
                   <ProductDetail>
-                    <Image src={product.img} />
+                    <Image src={product.img[0]} />
                     <Details>
                       <ProductName>
                         <b>Product: </b>

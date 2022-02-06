@@ -299,8 +299,9 @@ const Product = () => {
         setDistanceToTop(window.pageYOffset + imgTag.getBoundingClientRect().top)
 
         imgTag.style.height = realImgHeight+'px'
-        imgContainer.style.height = realImgHeight+'px'
-        carouselArrow.parentNode.parentNode.style.height = realImgHeight+'px'
+        imgContainer.style.height = (realImgHeight + 120)+'px'
+        carouselArrow.parentNode.parentNode.style.height = (realImgHeight + 120)+'px'
+        imgTag.parentNode.parentNode.parentNode.parentNode.parentNode.style.height = realImgHeight +'px'
         window.clearInterval(interval2);
       }
     }, 1000)
@@ -361,11 +362,11 @@ const Product = () => {
                 opacity: '1.0'
               }
             }} 
-            // indicatorContainerProps={{
-            //   style: {
-            //     marginTop: '20px',
-            //   }
-            // }}                       
+            indicatorContainerProps={{
+              style: {
+                marginTop: '20px',
+              }
+            }}                       
             navButtonsProps={{
               style: {
                 margin: 'auto',
@@ -388,7 +389,7 @@ const Product = () => {
             }}                    
           >
             {product?.img?.map((value, index)=>(
-              <div key={index} style={{width: 'fit-content', margin: 'auto', position: 'relative' }}>
+              <div key={index} style={{width: 'fit-content', display: 'block', margin: 'auto', position: 'relative' }}>
               <Image
                 className='img-origin'
                 onMouseMove={(e) => {zoomIn(e)}}
