@@ -24,7 +24,7 @@ export default function WidgetLg() {
 
   const handleUpdate = async (e, i)=>{
     e.preventDefault()
-    let obj = {...orders[i]}
+    let obj = {...orders[i + (page-1) * rowPerPage]}
     obj.status = e.target.value
     
     try {
@@ -98,10 +98,10 @@ export default function WidgetLg() {
             }</td>
             <td className="widgetLgAmount">{order?.amount} &#8363;</td>
             <td className="widgetLgStatus">
-            <select name="inStock" id="stock" 
+            <select name="inStock"
               className={"widgetLgButton "+order?.status} 
               defaultValue={order?.status}
-              onChange={(e)=>{handleUpdate(e, i)}}
+              onChange={(e)=>{handleUpdate(e, i); e.target.className='widgetLgButton '+e.target.value;}}
             >
               <option value="pending" className={"widgetLgButton pending"}>
                 Pending

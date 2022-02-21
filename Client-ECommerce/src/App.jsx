@@ -47,7 +47,7 @@ const App = () => {
         {user && (
           <Route exact path="/resultMomo" element={<Momo/>}/>
         )}
-        <Route path="*" element={<Navigate to='/'/>}/>
+        <Route exact path="/*" element={<Navigate to='/'/>}/>
       </Switch>
     </Router>
   )
