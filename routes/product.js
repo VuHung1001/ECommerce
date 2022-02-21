@@ -1,17 +1,14 @@
 const Product = require("../models/Product");
 const {
   verifyToken,
-  verifyTokenAndAuthorization,
   verifyTokenAndAdmin,
 } = require("./verifyToken");
 
 const router = require("express").Router();
 
 //CREATE
-
 router.post("/", verifyTokenAndAdmin, async (req, res) => {
   const newProduct = new Product(req.body);
-
   try {
     const savedProduct = await newProduct.save();
     res.status(200).json(savedProduct);
@@ -84,14 +81,17 @@ router.get("/", async (req, res) => {
   let sort;
   
   switch (qSort) {
-    case "desc":
-      sort = { price: -1 }
+    case "newest":
+      sort = { createdAt: -1 }
+      break;
+    case "oldest":
+      sort = { createdAt: 1 }
       break;
     case "asc":
       sort = {price: 1}
       break;
     default:
-      sort = { createdAt: -1 }
+      sort = { price: -1 }
       break;
   }
 

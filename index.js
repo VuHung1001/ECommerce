@@ -13,6 +13,7 @@ const orderRoute = require("./routes/order");
 const checkoutRoute = require("./routes/checkout");// payment route
 const mail = require("./routes/mail");// mail route
 const cors = require("cors");
+// const cookieSession = require('cookie-session');
 
 
 mongoose
@@ -22,6 +23,13 @@ mongoose
         console.dir(err);
     });
 
+// app.use(cookieSession({
+//     name: 'session',
+//     keys: ['secret'],
+    
+//     // Cookie Options
+//     sameSite: 'none'
+// }))
 app.use(cors());
 app.use(express.json()); // enable receive json in request
 app.use("/api/auth", authRoute);
@@ -45,7 +53,6 @@ if(process.env.NODE_ENV === 'production'){
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, './Client-ECommerce/build', 'index.html'));
     });
-
 }
 
 app.listen(process.env.PORT || 5000, () => {

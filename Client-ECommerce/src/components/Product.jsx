@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { addProduct } from '../redux/cartRedux'
 import { mobile } from '../responsive'
 
-const Info = styled.div`
+const Icons = styled.div`
     opacity: 0;
     width: 100%;
     height: 100%;
@@ -24,17 +24,19 @@ const Info = styled.div`
 const Container = styled.div`
     flex: 1 ${(props) => props.page && '26%'};
     margin: 5px;
-    min-width: 20%;
-    max-width: 360px;
-    height: 360px;
+    min-width: 300px;
+    width: 23vw;
+    max-width: 26vw;
+    min-height: 300px;
+    height: 23vw;
     display: flex;
-    align-items: center;
+    ${'' /* align-items: center; */}
     justify-content: center;
     background-color: #f5fbfd;
     position: relative;
-    ${mobile({ minWidth: '100%' })}
+    ${mobile({ width: '100%', minWidth: '40vh', height: '40vh' })}
 
-    &:hover ${Info}{
+    &:hover ${Icons}{
         opacity: 1
     }
 `
@@ -49,7 +51,7 @@ const Circle = styled.div`
 
 const Image = styled.img`
     height: 80%;
-    width: 80%;
+    width: 95%;
     object-fit: cover;
     z-index: 2;
 `
@@ -70,6 +72,20 @@ const Icon= styled.div`
     };
 `
 
+const Info = styled.div`
+    height: 19%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+`
+const Span = styled.span``
+
 const Product = ({item}) => {
     const dispatch = useDispatch();
     const currentPage = window.location.href.split('/')[3];
@@ -83,7 +99,7 @@ const Product = ({item}) => {
         <Container page={currentPage}>
             <Circle/>
             <Image src={item.img[0]}/>
-            <Info>
+            <Icons>
                 <Icon onClick={addToCart}>
                     <ShoppingCartOutlined/>
                 </Icon>
@@ -95,6 +111,10 @@ const Product = ({item}) => {
                 <Icon>
                     <FavoriteBorderOutlined/>
                 </Icon>
+            </Icons>
+            <Info>
+                <Span><b>{item.title}</b></Span>
+                <Span>{item.price} &#8363;</Span>
             </Info>
         </Container>
     )

@@ -10,9 +10,10 @@ import {
 } from "react-router-dom";
 import UserList from "./pages/userList/UserList";
 import User from "./pages/user/User";
-import NewUser from "./pages/newUser/NewUser";
+// import NewUser from "./pages/newUser/NewUser";
 import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
+import Order from "./pages/order/Order";
 import NewProduct from "./pages/newProduct/NewProduct";
 import Login from "./pages/login/Login";
 import { useSelector } from "react-redux";
@@ -45,11 +46,12 @@ function App() {
             <Route path="/admin" exact element={<Home />}/>
             <Route path="/admin/users" exact element={<UserList />}/>
             <Route path="/admin/user/:userId" exact element={ <User />}/>
-            <Route path="/admin/newUser" exact element={<NewUser />}/>
+            {/* <Route path="/admin/newUser" exact element={<NewUser />}/> */}
             <Route path="/admin/products" exact element={<ProductList />}/>
             <Route path="/admin/product/:productId" exact element={<Product />}/>
             <Route path="/admin/newproduct" exact element={<NewProduct />}/>
-            <Route path="/admin/*" exact element={<Home />}/>
+            <Route path="/admin/order/:orderId" exact element={<Order />}/>
+            <Route path="/admin/*" exact element={<Navigate to="/admin"/>}/>
           </Switch>
         </div>
         </>

@@ -6,6 +6,7 @@ import { userRequest } from "../requestMethods";
 import { useNavigate } from "react-router-dom";
 import DeliveryDetail from "./DeliveryDetail";
 import { useState, useEffect } from "react";
+import Notification from "./Notification";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -17,14 +18,25 @@ const SelectPayment = (props) => {
   const [displayDelivery, setDisplayDelivery] = useState(false)
   const [address, setAddress] = useState(null)
   const [clickedPayment, setClickedPayment] = useState(null)
+  const [notifyMes, setNotifyMes] = useState('')
+  const [notifyType, setNotifyType] = useState('info')
+  const [notifyTitle, setNotifyTitle] = useState('')
 
   const useStripePayment = (token) => {
     if (!user.currentUser?._id) {
-      window.alert("Please login before checkout, redirecting to login page");
-      navigate("/login");
+      setNotifyMes('Please login before checkout, redirecting to login page')
+      setNotifyType('warning')
+      setNotifyTitle('Notice')    
+
+      const timeout = setTimeout(()=>{
+        navigate('/login')
+        window.clearTimeout(timeout)
+      }, 4000)
     }
     if (cart.total <= 0){
-      window.alert("Your cart is empty, please buy some our products first")
+      setNotifyMes('Your cart is empty, please buy some our products first')
+      setNotifyType('warning')
+      setNotifyTitle('Notice') 
     }
     else {
       setStripeToken(token);
@@ -33,11 +45,19 @@ const SelectPayment = (props) => {
 
   const useMomoPayment = () => {
     if (!user.currentUser?._id) {
-      window.alert("Please login before checkout, redirecting to login page");
-      navigate("/login");
+      setNotifyMes('Please login before checkout, redirecting to login page')
+      setNotifyType('warning')
+      setNotifyTitle('Notice')    
+
+      const timeout = setTimeout(()=>{
+        navigate('/login')
+        window.clearTimeout(timeout)
+      }, 4000)
     }
     if (cart.total <= 0){
-      window.alert("Your cart is empty, please buy some our products first")
+      setNotifyMes('Your cart is empty, please buy some our products first')
+      setNotifyType('warning')
+      setNotifyTitle('Notice') 
     }
     else{
       setDisplayDelivery(true)
@@ -62,8 +82,14 @@ const SelectPayment = (props) => {
         } catch (err) {
           console.dir(err);
           if(err.response.data === 'Token is not valid!'){
-            window.alert('You was not login or your login session was expired, redirecting to login page')
-            navigate('/login')
+            setNotifyMes('You was not login or your login session was expired, redirecting to login page')
+            setNotifyType('warning')
+            setNotifyTitle('Notice')             
+
+            const timeout = setTimeout(()=>{
+              navigate('/login')
+              window.clearTimeout(timeout)
+            }, 4000)
           }
           setClickedPayment(false);
         }
@@ -75,6 +101,12 @@ const SelectPayment = (props) => {
 
   return (
     <>
+    <Notification 
+        title={notifyTitle}
+        message={notifyMes}
+        type={notifyType}
+        duration={5000}
+    />      
     <DeliveryDetail 
       displayDelivery={displayDelivery} 
       setDisplayDelivery={setDisplayDelivery}

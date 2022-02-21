@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { userRequest } from "../requestMethods";
 import SelectPayment from "../components/SelectPayment";
 import { addProduct, removeProduct } from "../redux/cartRedux";
+import Notification from "../components/Notification";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -201,11 +202,19 @@ const Cart = () => {
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [message, setMessage] = useState('')
+  const [type, setType] = useState('info')
+  const [title, setTitle] = useState('')
 
   const checkout = () => {
     if(!user.currentUser?._id){
-        window.alert('Please login before checkout, redirecting to login page')
-        navigate('/login')
+        setMessage('Please login before checkout, redirecting to login page')
+        setType('warning')
+        setTitle('Notice')
+        const timeout = setTimeout(()=>{
+          navigate('/login')
+          window.clearTimeout(timeout)
+        }, 4000)
     }
     document.querySelector(".payment-container").style.display = "block";
   };
@@ -254,6 +263,7 @@ const Cart = () => {
     <Container>
       <Navbar />
       <Announcement />
+      <Notification title={title} message={message} type={type} />
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>

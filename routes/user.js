@@ -9,7 +9,7 @@ const {
 const router = require("express").Router();
 
 //UPDATE
-router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.put("/:userId", verifyTokenAndAuthorization, async (req, res) => {
   if (req.body.password) {
     req.body.password = CryptoJS.AES.encrypt(
       req.body.password,
@@ -19,7 +19,7 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
 
   try {
     const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
+      req.params.userId,
       {
         $set: req.body,
       },
@@ -32,9 +32,9 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.delete("/:userId", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    await User.findByIdAndDelete(req.params.id);
+    await User.findByIdAndDelete(req.params.userId);
     res.status(200).json("User has been deleted...");
   } catch (err) {
     res.status(500).json(err);
@@ -52,13 +52,27 @@ router.get("/find/:id", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
+//GET USER PASSWORD
+router.get("/findPassword/:userId", verifyTokenAndAuthorization, async (req, res) => {
+  if(req.user?.isAdmin){
+    return res.status(500).send('Admin should not see his or someone else password')
+  }
+  try {
+    const user = await User.findById(req.params.userId);
+    const { password, ...others } = user._doc;
+    res.status(200).json(password);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 //GET ALL USER
 // optional query param: new(boolean)
 router.get("/", verifyTokenAndAdmin, async (req, res) => {
   const query = req.query.new;
   try {
     const users = query
-      ? await User.find().sort({ _id: -1 }).limit(5)
+      ? await User.find().sort({ _id: -1 })
       : await User.find();
     res.status(200).json(users);
   } catch (err) {
@@ -89,6 +103,12 @@ router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
           total: { $sum: 1 },
         },
       },
+      {
+        $sort: {_id: -1}
+      },
+      {
+        $limit: 4
+      }      
     ]);
     res.status(200).json(data)
   } catch (err) {

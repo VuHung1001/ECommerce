@@ -10,6 +10,7 @@ import { mobile } from "../responsive";
 
 const Container = styled.div``;
 const Title = styled.h1`
+    text-align: center;
     margin: 20px;
 `;
 const FilterContainer = styled.div`
@@ -33,6 +34,12 @@ const Select = styled.select`
 `
 const Option = styled.option``
 
+const youtubeVideos ={
+    'All Products': '0D2Pv0Xl69Q',
+    'Transformers': '0D2Pv0Xl69Q',
+    'Marvel': '2DkdFhVznY4',
+    'DC-Comics' :'PLwFgS4H64k'
+}
 
 const ProductList = () => {
     const location = useLocation();
@@ -41,7 +48,7 @@ const ProductList = () => {
     
     const [filters, setFilters] = useState({
         category: categoryPath ? categoryPath : 'All Products',
-        sort: 'Newest',
+        sort: 'Price (desc)',
     });
 
     //change url by category without redirect or reload page
@@ -84,6 +91,25 @@ const ProductList = () => {
     
     return (
         <Container>
+            <iframe 
+                src={`https://www.youtube.com/embed/${youtubeVideos[filters.category]}?playList=${youtubeVideos[filters.category]}&autoplay=1&mute=1&loop=1&version=3`}
+                title="YouTube video player" 
+                frameBorder="0" 
+                autoPlay
+                muted
+                loop={true}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+                style={{
+                    position: 'fixed',
+                    right: '0',
+                    bottom: '0',
+                    minWidth: '100%',
+                    minHeight: '100%',
+                    opacity: '0.3',
+                    zIndex: '-1000'
+                }}
+            ></iframe>
             <Navbar category={filters?.category}/>
             <Announcement />
             <Title>{filters.category}</Title>
@@ -101,7 +127,7 @@ const ProductList = () => {
                         <Option>DC-Comics</Option>
                     </Select>
                     {/* <Select onChange={handleFilters}>
-                        <Option disabled defaultValue>Scale</Option>
+                        <Option disabled >Scale</Option>
                         <Option>1:20</Option>
                         <Option>1:30</Option>
                         <Option>1:50</Option>
@@ -110,9 +136,10 @@ const ProductList = () => {
                 <Filter>
                     <FilterText>Sort Products:</FilterText>
                     <Select name="sort" onChange={handleFilters}>
-                        <Option value="newest" defaultValue>Newest</Option>
+                        <Option value="desc" defaultValue>Price (desc)</Option>
                         <Option value="asc">Price (asc)</Option>
-                        <Option value="desc">Price (desc)</Option>
+                        <Option value="newest">Newest</Option>
+                        <Option value="oldest">Oldest</Option>
                         {/* <Option value="bestseller">Bestseller</Option>
                         <Option value="toprated">Top rated</Option> */}
                     </Select>

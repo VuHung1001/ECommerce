@@ -6,13 +6,18 @@ const cryptoJs = require("crypto-js");
 
 const {
   verifyToken,
-  verifyTokenAndAuthorization,
   verifyTokenAndAdmin,
 } = require("./verifyToken");
 
 const accessKey = process.env.MOMO_ACCESS_KEY;
 const secretKey = process.env.MOMO_SECRET_KEY;
 const BASE_URL = process.env.BASE_URL
+// Uncomment this line and replace ipn url in momo method when developing
+// const BASE_URL_API = "http://localhost:5000"; 
+
+// Notice: Edit BASE_URL in .env, two lines here just for suggesting
+// const BASE_URL = 'https://figures-shop-api.herokuapp.com'; //for production
+// const BASE_URL = "http://localhost:3000"; //for developing
 
 // use stripe api for payment handling
 router.post("/stripe", verifyToken, (req, res) => {
@@ -103,10 +108,6 @@ router.post("/ipn/momo", (req, res) => {
 router.post("/momo", verifyToken, async (req, res) => {
   const amount = req.body.amount
   const address = JSON.stringify(req.body.address)
-  
-  // const BASE_URL = 'https://figures-shop-api.herokuapp.com';
-  // const BASE_URL = "http://localhost:3000";
-  const BASE_URL_API = "http://localhost:5000";
 
   var partnerCode = "MOMO0T1D20220107";
   var requestId = uuidv4();

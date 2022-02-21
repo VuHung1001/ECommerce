@@ -13,6 +13,7 @@ import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import PersonAddAltRoundedIcon from '@mui/icons-material/PersonAddAltRounded';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
+import {GoogleLogout} from 'react-google-login'
 import { logout } from "../redux/userRedux";
 import { mobile } from "../responsive";
 import { publicRequest } from "../requestMethods";
@@ -20,7 +21,6 @@ import Music from "../components/Music";
 import "./navbar.css";
 
 const Container = styled.div`
-  height: 60px;
   ${mobile({ padding: "10px 0px" })}
   position: fixed;
   z-index: 2000;
@@ -43,6 +43,7 @@ const Left = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
   ${mobile({ flex: 2 })}
 `;
 
@@ -87,6 +88,7 @@ const Right = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  transition: all 0.5s ease;
   ${mobile({ flex: 3, justifyContent: "center", marginRight: '0px' })}
 `;
 
@@ -117,14 +119,18 @@ const Navbar = ({category}) => {
   const disableCenterRight = ()=>{
     if(window.innerWidth <= 700 ){
       if(centerRef.current?.childNodes){
-          centerRef.current.style.display = 'none'
+          // centerRef.current.style.display = 'none'
+          centerRef.current.style.opacity = '0'
       }
       if(rightRef.current?.childNodes){
-        rightRef.current.style.display = 'none'
+        // rightRef.current.style.display = 'none'
+        rightRef.current.style.opacity = '0'
       }
       if(inputRef.current){
           inputRef.current.style.width = '80vw'
       }
+    } else {
+      inputRef.current.style.width = '30vw'
     }
   }
   
@@ -132,19 +138,24 @@ const Navbar = ({category}) => {
   const displayCenterRight = ()=>{
     if(window.innerWidth <= 700 ){
       if(centerRef.current?.childNodes){
-          centerRef.current.style.display = 'block'
+          // centerRef.current.style.display = 'block'
+          centerRef.current.style.opacity = '1'
       }
       if(rightRef.current?.childNodes){
-        rightRef.current.style.display = 'flex'
+        // rightRef.current.style.display = 'flex'
+        rightRef.current.style.opacity = '1'
       }
       if(inputRef.current){
         inputRef.current.style.width = '100%'
       }
     }
+    else {
+      inputRef.current.style.width = '100%'
+    }
   }
 
   const handleLogout = (e) => {
-    e.preventDefault();
+    e && e.preventDefault();
     dispatch(logout());
   };
 
@@ -181,18 +192,25 @@ const Navbar = ({category}) => {
                 getOptionLabel={(option) => option.title}
                 renderOption={(props, option) => (
                     <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                      <Link to={`/product/${option._id}`} className="link"
+                        style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+                      >
                       <img
                         loading="lazy"
-                        width={
-                            window.innerWidth <= 900 && window.innerWidth > 700
-                            ? '45px'
-                            : '80px'
+                        height={
+                            window.innerWidth > 700
+                            ? (window.innerWidth / 10)+'px'
+                            : (window.innerWidth / 4)+'px'
                         }
-                        src={option.img}
+                        src={option.img[0]}
                         alt=""
+                        style={{flex: '1'}}
                       />
+                      <div style={{flex: '1', marginLeft: '10px'}}>
                       {option.title}<br/>
                       {option.price} &#8363;
+                      </div>
+                      </Link>
                     </Box>
                   )}
                 renderInput={(params) => (
@@ -202,6 +220,9 @@ const Navbar = ({category}) => {
                     onBlur={displayCenterRight}
                     {...params} 
                     label="search"
+                    style={{
+                      transition: 'all 0.5s ease'
+                    }}
                   />
                 )}
               />
@@ -229,9 +250,21 @@ const Navbar = ({category}) => {
             )
             : (
               <>
-              <Link to="/logout" onClick={handleLogout} className="link">
-                <MenuItem><LogoutRoundedIcon/>LOG OUT</MenuItem>
-              </Link>
+              {
+                user?.loginByGoogle 
+                  ? (
+                    <GoogleLogout
+                      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                      buttonText="Logout"
+                      onLogoutSuccess={handleLogout}
+                    ></GoogleLogout>        
+                  )
+                  : (
+                    <Link to="/logout" onClick={handleLogout} className="link">
+                      <MenuItem><LogoutRoundedIcon/>LOG OUT</MenuItem>
+                    </Link>
+                  )      
+              }
               <Link to="/account" className="link">
                 <MenuItem><PersonRoundedIcon/>YOUR ACCOUNT</MenuItem>
               </Link>

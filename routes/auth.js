@@ -2,9 +2,35 @@ const router = require("express").Router();
 const User = require("../models/User");
 const CryptoJS = require("crypto-js");// hash password
 const jwt = require("jsonwebtoken"); //json web token for verify user
+const {
+  verifyToken,
+} = require("./verifyToken");
+
+//CHECK LOGGED IN
+router.get('/authorize', verifyToken, async (req, res) => {
+  res.status(202).send('Logged in')
+})
+
+//CHECK USERNAME EXISTS
+router.get('/checkUsername/:username', async (req, res) => {
+  const user = await User.findOne(
+    {
+      username: req.params.username
+    }
+  );
+  if( user ) return res.status(201).send("Username already exists"); 
+  else return res.status(200).send('OK') 
+})
 
 //REGISTER
 router.post("/register", async (req, res) => {
+  const user = await User.findOne(
+    {
+      username: req.body.username
+    }
+  );
+  if( user ) return res.status(409).json("Username already exists");
+  
   const newUser = new User({
     username: req.body.username,
     email: req.body.email,
@@ -12,6 +38,10 @@ router.post("/register", async (req, res) => {
       req.body.password,
       process.env.PASS_SEC
     ).toString(),
+    loginByGoogle: req.body?.loginByGoogle ? req.body.loginByGoogle : false,
+    img: req.body?.img 
+        ? req.body.img 
+        : 'https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif',
   });
 
   try {
@@ -23,8 +53,8 @@ router.post("/register", async (req, res) => {
 });
 
 //LOGIN
-
 router.post('/login', async (req, res) => {
+  if(req.body.password){
     try{
         const user = await User.findOne(
             {
@@ -41,12 +71,12 @@ router.post('/login', async (req, res) => {
         );
           
         // original password was found from db
-        const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
+        const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8)+'';
 
         // password was inputted for login
-        const inputPassword = req.body.password;
-        
-        if(originalPassword != inputPassword)
+        const inputPassword = req.body.password+'';
+
+        if(originalPassword !== inputPassword)
             return res.status(401).json("Wrong Password");
 
         // create new jwt
@@ -56,7 +86,7 @@ router.post('/login', async (req, res) => {
               isAdmin: user.isAdmin,
           },
           process.env.JWT_SEC,
-          {expiresIn:"3d"}
+          {expiresIn:"1d"}
         );
   
         const { password, ...others } = user._doc;  
@@ -64,7 +94,7 @@ router.post('/login', async (req, res) => {
     }catch(err){
         return res.status(500).json(err);
     }
-
+  }
 });
 
 module.exports = router;

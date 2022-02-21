@@ -5,6 +5,6 @@
 .env.production.local
 node_modules
 .vscode
-/yarn.lock
+yarn.lock
 mp3
 readme.txt

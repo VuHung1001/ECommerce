@@ -4,9 +4,10 @@ import {useState} from 'react'
 import { mobile } from '../responsive'
 import TextField from "@mui/material/TextField"
 import { publicRequest } from '../requestMethods'
+import Notification from '../components/Notification'
 
 const Container = styled.div`
-    height: 60vh;
+    height: 40vh;
     background-color: #fcf5f5;
     display: flex;
     align-items: center;
@@ -58,6 +59,9 @@ const Button = styled.button`
 `
 const Newsletter = () => {
     const [hasError, setHasError] = useState(false)
+    const [notifyMes, setNotifyMes] = useState('')
+    const [notifyType, setNotifyType] = useState('info')
+    const [notifyTitle, setNotifyTitle] = useState('')
     
     const handleMail = async () => {
         const mailInput = document.querySelector('#user-mail');
@@ -72,18 +76,28 @@ const Newsletter = () => {
             try{
                 const res = publicRequest.post('/mail', {userMail: mailInput.value})
                 if(res){
-                    window.alert('We sent a mail to your email, thanks for trusted our service')
+                    setNotifyMes('We sent a mail to your email, thanks for trusted our service')
+                    setNotifyType('success')
+                    setNotifyTitle('Success')
                     mailInput.value=''
                 }
             } catch(e) {
                 console.dir(e)
-                window.alert('An error has occurred, sorry for this inconvenience')
+                setNotifyMes('An error has occurred, sorry for this inconvenience')
+                setNotifyType('error')
+                setNotifyTitle('Error')
             }
         }
     }
 
     return (
         <Container>
+            <Notification 
+                title={notifyTitle}
+                message={notifyMes}
+                type={notifyType}
+                duration={5000}
+            />  
             <Title>Newsletter</Title>
             <Description>Get timely updates from your favorite products.</Description>
             <InputContainer>

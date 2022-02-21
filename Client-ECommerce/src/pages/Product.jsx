@@ -175,7 +175,7 @@ const Button = styled.button`
 const Product = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState();
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const [imgZoomMarginLeft, setImgZoomMarginLeft] = useState(0);
@@ -193,7 +193,7 @@ const Product = () => {
   };
 
   const addToCart = () => {
-    dispatch(addProduct({ ...product, quantity }));
+    product && dispatch(addProduct({ ...product, quantity }));
   };
 
   const changeImg = (now, prev) => {
@@ -270,6 +270,7 @@ const Product = () => {
       }
     }, 1000)
 
+    // set img height and width to fit real img size
     const interval2 = setInterval(() => {
       let imgTag = document.getElementsByClassName("img-origin")[imgIndex];
       let imgContainer = document.getElementById('img-container')
@@ -323,6 +324,7 @@ const Product = () => {
     <Container>
       <Navbar category={product?.category}/>
       <Announcement />
+      {product && (
       <Wrapper>
         <ImgContainer id='img-container'>
           <Carousel
@@ -334,7 +336,7 @@ const Product = () => {
             autoPlay={true}
             fullHeightHover={false}
             interval={10000}
-            animation='slide'
+            animation='fade'
             duration={800}
             swipe={true}
             IndicatorIcon={
@@ -393,7 +395,7 @@ const Product = () => {
               <Image
                 className='img-origin'
                 onMouseMove={(e) => {zoomIn(e)}}
-                src={product.img[index]} 
+                src={product?.img[index]} 
               />
               <ImgLen
                 className='img-len'
@@ -410,9 +412,9 @@ const Product = () => {
           />
         </ImgContainer>
         <InfoContainer>
-          <Title>{product.title}</Title>
-          <Desc>{product.desc}</Desc>
-          <Price>{product.price} &#8363;</Price>
+          <Title>{product?.title}</Title>
+          <Desc>{product?.desc}</Desc>
+          <Price>{product?.price} &#8363;</Price>
 
           <OptionContainer>
             {/* <FilterContainer>
@@ -436,6 +438,10 @@ const Product = () => {
           </OptionContainer>
         </InfoContainer>
       </Wrapper>
+      )}
+      {!product && (
+        <h2 style={{textAlign: 'center', margin: '50px'}}>Can't find any product with id: {id}</h2>
+      )}
       <Newsletter />
       <Footer />
     </Container>

@@ -19,7 +19,7 @@ export default function ProductList() {
   };
 
   const columns = [
-    { field: "_id", headerName: "ID", width: 220 },
+    { field: "_id", headerName: "ID", width: 250 },
     {
       field: "product",
       headerName: "Product",
@@ -27,17 +27,17 @@ export default function ProductList() {
       renderCell: (params) => {
         return (
           <div className="productListItem">
-            <img className="productListImg" src={params.row.img} alt="" />
+            <img className="productListImg" src={params.row.img[0]} alt="" />
             {params.row.title}
           </div>
         );
       },
     },
-    { field: "inStock", headerName: "Stock", width: 200 },
+    { field: "inStock", headerName: "Stock", width: 150 },
     {
       field: "price",
       headerName: "Price",
-      width: 160,
+      width: 150,
     },
     {
       field: "action",
@@ -66,7 +66,7 @@ export default function ProductList() {
         disableSelectionOnClick
         columns={columns}
         getRowId={(row) => row._id}
-        rowsPerPageOptions={[8, 4, 100]}
+        rowsPerPageOptions={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100]}
         checkboxSelection
       />
     </div>

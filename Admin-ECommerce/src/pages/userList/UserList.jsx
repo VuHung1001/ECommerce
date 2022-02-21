@@ -1,42 +1,55 @@
 import "./userList.css";
 import { DataGrid } from "@material-ui/data-grid";
-import { DeleteOutline } from "@material-ui/icons";
-import { userRows } from "../../dummyData";
+// import { DeleteOutline } from "@material-ui/icons";
+// import { userRows } from "../../dummyData";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsers } from "../../redux/apiCalls";
+
 
 export default function UserList() {
-  const [data, setData] = useState(userRows);
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.user?.allUsers);
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-  };
+  useEffect(() => {
+    getAllUsers(dispatch);
+  }, [dispatch]);
+
+  // const handleDelete = (id) => {
+  //   deleteProduct(id, dispatch);
+  // };
   
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+    { field: "_id", headerName: "ID", width: 250 },
     {
       field: "user",
       headerName: "User",
-      width: 200,
+      width: 150,
       renderCell: (params) => {
         return (
           <div className="userListUser">
-            <img className="userListImg" src={params.row.avatar} alt="" />
-            {params.row.username}
+            <img className="userListImg" 
+              src={
+                params.row?.img 
+                || "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"
+              } 
+              alt= {params.row?.username}
+              referrerPolicy="no-referrer"
+            />
+            {params.row?.loginByGoogle 
+              ? params.row?.username
+              : 'Logged with Google'
+            }
           </div>
         );
       },
     },
-    { field: "email", headerName: "Email", width: 200 },
+    { field: "email", headerName: "Email", width: 250 },
     {
-      field: "status",
-      headerName: "Status",
-      width: 120,
-    },
-    {
-      field: "transaction",
-      headerName: "Transaction Volume",
-      width: 160,
+      field: "isAdmin",
+      headerName: "Admin",
+      width: 150,
     },
     {
       field: "action",
@@ -45,13 +58,13 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/admin/user/" + params.row.id}>
-              <button className="userListEdit">Edit</button>
+            <Link to={"/admin/user/" + params.row?._id}>
+              <button className="userListEdit">View</button>
             </Link>
-            <DeleteOutline
+            {/* <DeleteOutline
               className="userListDelete"
               onClick={() => handleDelete(params.row.id)}
-            />
+            /> */}
           </>
         );
       },
@@ -61,10 +74,11 @@ export default function UserList() {
   return (
     <div className="userList">
       <DataGrid
-        rows={data}
+        rows={users}
         disableSelectionOnClick
         columns={columns}
-        rowsPerPageOptions={[8, 4, 100]}
+        getRowId={(row) => row?._id}
+        rowsPerPageOptions={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100]}
         checkboxSelection
       />
     </div>

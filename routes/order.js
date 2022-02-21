@@ -55,27 +55,17 @@ router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-//GET ALL
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
-  try {
-    const orders = await Order.find();
-    res.status(200).json(orders);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
 // GET MONTHLY INCOME
 // this method return incomes in each months
 // in last two months
 router.get("/income", verifyTokenAndAdmin, async (req, res) => {
   //get last two months from now
-  const lastTwoMonths = new Date(new Date().setMonth(new Date().getMonth() - 2));
+  const lastThreeMonths = new Date(new Date().setMonth(new Date().getMonth() - 3));
   const productId = req.query.pid;
   try {
     const income = await Order.aggregate([
       { $match: { 
-        createdAt: { $gte: lastTwoMonths } ,
+        createdAt: { $gte: lastThreeMonths } ,
         ...(productId && {
           products: {
             $elemMatch: { productId }
@@ -98,10 +88,30 @@ router.get("/income", verifyTokenAndAdmin, async (req, res) => {
         $sort: {_id: -1}
       },
       {
-        $limit: 4
+        $limit: 3
       }
     ]);
     res.status(200).json(income);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//GET ORDER BY ID
+router.get("/:orderId/:userId", verifyTokenAndAuthorization, async (req, res) => {
+  try {
+    const order = await Order.findOne({ _id: req.params.orderId });
+    res.status(200).json(order);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//GET ALL
+router.get("/", verifyTokenAndAdmin, async (req, res) => {
+  try {
+    const orders = await Order.find();
+    res.status(200).json(orders);
   } catch (err) {
     res.status(500).json(err);
   }

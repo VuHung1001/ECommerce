@@ -6,7 +6,7 @@ const smtpTransport = require('nodemailer-smtp-transport');
 //Receive user mail and send some text to their mail
 router.post("/", async (req, res) => {
     let userMail = req.body.userMail;
-    // console.log('user mail: '+userMail);
+    let mailText = req.body.mailText;
 
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport(smtpTransport({
@@ -22,9 +22,9 @@ router.post("/", async (req, res) => {
     let info = await transporter.sendMail({
       from: "Figures shop 👻 "+ process.env.MY_MAIL, // sender address
       to: userMail, // list of receivers
-      subject: "Hello ✔", // Subject line
-      text: "Hello world?", // plain text body
-      html: "<b>Hello world?</b>", // html body
+      subject: mailText ? 'Exchange Info' : "Hello ✔", // Subject line
+      text: "Figures Shop", // plain text body
+      html: `<div style="white-space: pre-line">${mailText}</div><br/><img src="https://blog.logomyway.com/wp-content/uploads/2021/08/transformer-logo.jpg" alt="Logo" title="Logo" style="display:block" width="100" height="100" />`, // html body
     },
     function(error, info){
       if (error) {

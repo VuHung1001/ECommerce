@@ -1,5 +1,6 @@
 .userList {
   flex: 4;
+  height: auto;
 }
 
 .userListUser {
@@ -28,4 +29,8 @@
 .userListDelete{
     color: red;
     cursor: pointer;
+}
+
+.MuiDataGrid-root{
+  height: 70vh !important;
 }
