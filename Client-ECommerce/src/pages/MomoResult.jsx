@@ -113,12 +113,15 @@ Products that you have purchased: \n
           // delete cart redux state if user reload page
           window.history.replaceState({}, '');
         }
-        emailRes.data && setIsMailSended(true)
+        
+        if(emailRes.data){
+          setIsMailSended(true)
 
-        const timeout = setTimeout(()=>{
-          navigate('/')
-          window.clearTimeout(timeout)
-        }, 60000)         
+          const timeout = setTimeout(()=>{
+            navigate('/')
+            window.clearTimeout(timeout)
+          }, 60000)   
+        }         
       } catch(err) {
         console.dir(err)
       }
@@ -146,7 +149,9 @@ Products that you have purchased: \n
           +'),'
           +'url("https://images2.alphacoders.com/424/thumb-1920-42470.jpg") '
           +'center',
-        backgroundSize: 'cover'       
+        backgroundSize: 'cover',
+        fontSize: '20px',
+        fontBold: '600'
       }}
     >
       <p>{resultMessage}</p>
@@ -154,12 +159,12 @@ Products that you have purchased: \n
         ? `Order has been created successfully. Your order number is ${orderId}.\n`
         : `Successful. Your order is being prepared...\n`}
       </p>
-      <p>
-        {isMailSended && `Transaction informations was sended to your email.\n`}
-      </p>
-      <p>
-        {amount && `Your total amount: ${amount +20000} `}&#8363;
-      </p>        
+      {isMailSended && (<p>
+        Order infors was sended to your email
+      </p>)}
+      {amount && (<p>
+        Your total amount: {amount +20000} &#8363;
+      </p>)}       
       <Link to="/">
         <button style={{ padding: 10, marginTop: 20 }}>Go to Homepage</button>
       </Link>

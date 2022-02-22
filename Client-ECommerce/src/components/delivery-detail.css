@@ -45,3 +45,9 @@
   padding: 25px 12px 8px 12px;
   box-sizing: content-box;
 }
+
+@media only screen and (max-width: 700px){
+  .delivery-container{
+    width: 60vw;
+  }
+}

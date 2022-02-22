@@ -91,6 +91,7 @@ const ProductList = () => {
     
     return (
         <Container>
+        {window.innerWidth > 700 && (
             <iframe 
                 src={`https://www.youtube.com/embed/${youtubeVideos[filters.category]}?playList=${youtubeVideos[filters.category]}&autoplay=1&mute=1&loop=1&version=3`}
                 title="YouTube video player" 
@@ -109,7 +110,7 @@ const ProductList = () => {
                     opacity: '0.3',
                     zIndex: '-1000'
                 }}
-            ></iframe>
+            ></iframe>)}
             <Navbar category={filters?.category}/>
             <Announcement />
             <Title>{filters.category}</Title>

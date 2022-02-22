@@ -68,7 +68,7 @@ const Music = ({category}) => {
     
     let timeout = setTimeout(()=>{
       if(audioTag?.current?.volume) {
-        audioTag.current.volume = 0.05; 
+        audioTag.current.volume = 0.02; 
         window.clearInterval(timeout)
       }
     }, 100)
@@ -97,7 +97,7 @@ const Music = ({category}) => {
         id='music-player'
         autoPlay={true}
         controls
-        volume= '0.05'
+        volume= '0.02'
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
         onEnded={playNextTrack}

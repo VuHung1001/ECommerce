@@ -78,10 +78,12 @@ const SelectPayment = (props) => {
             amount: cart.total + 20000,
             address
           });
-          window.location.href = JSON.parse(res.data).payUrl;
+          if(res.data){
+            window.location.href = JSON.parse(res.data).payUrl;
+          }
         } catch (err) {
           console.dir(err);
-          if(err.response.data === 'Token is not valid!'){
+          if(err?.response?.data === 'Token is not valid!'){
             setNotifyMes('You was not login or your login session was expired, redirecting to login page')
             setNotifyType('warning')
             setNotifyTitle('Notice')             
