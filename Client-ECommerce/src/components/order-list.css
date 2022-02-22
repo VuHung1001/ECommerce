@@ -67,3 +67,16 @@
 .widgetLgAction:hover{
   transform: scale(1.1);
 }
+
+@media only screen and (max-width: 700px){
+  .widgetLg{
+    width: 100vw !important;
+    margin: 20px 0px;
+    padding: 20px 5px;
+  }
+  .widgetLgButton{
+    font-size: 17px !important;
+    padding: 2px 2px !important;
+    margin: 0px !important;
+  }
+}

@@ -235,3 +235,37 @@
   transition: all 0.8s ease;
   transform: scale(1.2);
 }
+
+@media only screen and (max-width: 700px){
+  .order{
+    padding: 20px 0px !important;
+  }
+  .orderContainer{
+    display: 'flex';
+    flex-direction: column;
+  }
+  .orderShow{
+    flex: 1;
+    min-width: 90%;
+    width: 90%;
+    margin: auto;
+  }
+  .orderUpdate{
+    flex: 1;
+    min-width: 90%;
+    width: 100vw !important;
+    margin: 20px 0px;
+    padding: 20px 5px;    
+  }
+  .widgetLg{
+    flex: 1;
+    width: 100vw !important;
+    margin: 20px 0px;
+    padding: 20px 5px;
+  }
+  .widgetLgButton{
+    font-size: 17px !important;
+    padding: 5px 5px !important;
+    margin: 0px !important;
+  }  
+}

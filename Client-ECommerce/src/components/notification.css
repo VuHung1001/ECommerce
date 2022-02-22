@@ -8,7 +8,7 @@
 
 #toast {
   position: fixed;
-  top: 32px;
+  top: 70px;
   right: 32px;
   z-index: 999999;
 }
@@ -114,4 +114,14 @@
   font-size: 20px;
   color: rgba(0, 0, 0, 0.3);
   cursor: pointer;
+}
+
+@media only screen and (max-width: 700px){
+  #toast{
+    width: 80vw;
+  }
+  .toast{
+    max-width: 95vw;
+    min-width: 80vw;
+  }
 }

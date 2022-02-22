@@ -175,7 +175,7 @@ export default function Order() {
               <span className="orderShowInfoTitle">{order?.updatedAt}</span>
             </div>   
 
-            <span className="orderShowTitle">Contact Details</span>
+            <span className="orderShowTitle">Delivery Details</span>
             <div className="orderShowInfo">
               {(order?.address?.city || order?.address?.country || order?.address?.state) 
               ? (

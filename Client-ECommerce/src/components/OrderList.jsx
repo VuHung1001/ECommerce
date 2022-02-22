@@ -50,7 +50,7 @@ export default function WidgetLg() {
       <table className="widgetLgTable">
         <thead>
         <tr className="widgetLgTr">
-          <th className="widgetLgTh">ID</th>
+          {/* <th className="widgetLgTh">ID</th> */}
           <th className="widgetLgTh">Date</th>
           <th className="widgetLgTh">Amount</th>
           <th className="widgetLgTh">Status</th>
@@ -60,9 +60,9 @@ export default function WidgetLg() {
         {orders.slice((page-1)*rowPerPage, page * rowPerPage).map((order, i) => (
           <tbody key={order?._id}>
           <tr className="widgetLgTr" >
-            <td className="widgetLgUser">
+            {/* <td className="widgetLgUser">
               <span className="widgetLgName">{order?._id}</span>
-            </td>
+            </td> */}
             <td className="widgetLgDate">{
               timeAgo.format(new Date(order?.updatedAt), 'round')
             }</td>

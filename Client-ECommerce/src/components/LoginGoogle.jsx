@@ -15,21 +15,21 @@ const LoginGoogle = ()=>{
   const [notifyTitle, setNotifyTitle] = useState('')
 
   const responseGoogle = async (res)=>{
-    const googleAuthRes = await axios.get(
-      'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token='
-      +res.tokenId
-    )
+    try{
+      const googleAuthRes = await axios.get(
+        'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token='
+        +res.tokenId
+      )
 
-    if(googleAuthRes.data?.email_verified === 'true'){
-      let user = {
-        email: res.profileObj.email,
-        username: res.profileObj.googleId,
-        password: res.profileObj.googleId,
-        loginByGoogle: true,
-        img: res.profileObj.imageUrl
-      }
+      if(googleAuthRes.data?.email_verified === 'true'){
+        let user = {
+          email: res.profileObj.email,
+          username: res.profileObj.googleId,
+          password: res.profileObj.googleId,
+          loginByGoogle: true,
+          img: res.profileObj.imageUrl
+        }
 
-      try{
         const checkUserRes = await publicRequest.get("/auth/checkUsername/"+user.username);
 
         if(checkUserRes.data === 'OK'){
@@ -45,17 +45,18 @@ const LoginGoogle = ()=>{
           !error && window.location.reload()
           window.clearTimeout(timeout)
         }, 1000) 
-      } catch(err){
-        console.dir(err)
-        setNotifyMes(err.response.data)
-        setNotifyType('error')
-        setNotifyTitle('Error')  
+
+      } else {
+        setNotifyMes('Your email cannot authorize')
+        setNotifyType('warning')
+        setNotifyTitle('Notice')      
       }
-    } else {
-      setNotifyMes('Your email cannot authorize')
-      setNotifyType('warning')
-      setNotifyTitle('Notice')      
-    }
+    } catch(err){
+      console.dir(err)
+      setNotifyMes(err.response.data)
+      setNotifyType('error')
+      setNotifyTitle('Error')  
+    }    
   }
 
   useEffect(()=>{

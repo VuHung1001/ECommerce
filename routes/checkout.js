@@ -16,7 +16,7 @@ const BASE_URL = process.env.BASE_URL
 // const BASE_URL_API = "http://localhost:5000"; 
 
 // Notice: Edit BASE_URL in .env, two lines here just for suggesting
-// const BASE_URL = 'https://figures-shop-api.herokuapp.com'; //for production
+// const BASE_URL = 'https://figures-shop.herokuapp.com'; //for production
 // const BASE_URL = "http://localhost:3000"; //for developing
 
 // use stripe api for payment handling
@@ -86,18 +86,18 @@ router.post("/ipn/momo", (req, res) => {
     console.log('rawSignature:');
     console.log(rawSignature);
 
-    let signature = cryptoJs.HmacSHA256(rawSignature, secretKey);
+    let signature = cryptoJs.HmacSHA256(rawSignature, secretKey).toString();
     console.log('signature:');
     console.log(signature);
 
     if(req.body.signature !== signature){
       console.log('invalid request information');
     } 
-    if(req.body.resultCode === 0){
-      console.log('successful payment');
-    }
     if(req.body.resultCode === 9000){
       console.log('successful authorization payment');
+    }
+    if(req.body.resultCode === 0){
+      console.log('successful payment');
     } else {
       console.log('failed payment');
     }

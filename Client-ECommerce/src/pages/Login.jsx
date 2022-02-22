@@ -95,7 +95,7 @@ const Login = () => {
 
     useEffect(()=>{
         dispatch(reset())
-        document.querySelector('#username').focus()
+        // document.querySelector('#username').focus()
 
         if(error) {
             setNotifyMes('Your username or/and password is incorrect, try again')

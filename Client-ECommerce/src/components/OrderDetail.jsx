@@ -24,11 +24,11 @@ export default function Order() {
   const [products, setProducts] = useState([])
 
   const columns = [
-    { field: "_id", headerName: "ID", width: 260 },
+    window.innerWidth > 700 && { field: "_id", headerName: "ID", width: 260 },
     {
       field: "product",
       headerName: "Product",
-      width: 210,
+      width: window.innerWidth > 700 ? 210 : 190,
       renderCell: (params) => {
         return (
           <div className="productListItem">
@@ -37,24 +37,27 @@ export default function Order() {
                 params.row.img[0]
               } alt={params.row.title}
             />
-            {params.row.title}
+            <p>{params.row.title}</p>
           </div>
         );
       },
     },
     {
       field: "price",
-      headerName: "Price",
+      headerName: window.innerWidth > 700 ? "Price" : 'đ',
       renderCell: (params) =>{
         return(
-          <div>{params.row.price+' '}</div>
+          <div style={{textAlign: 'center', width: '100%'}}>
+            <p>{params.row.price+' '}</p>
+            {/* &#8363; */}
+          </div>
         )
       },
-      width: 150,
+      width: window.innerWidth > 700 ? 150 : 80,
     },
     {
       field: "quantity",
-      headerName: "Quantity",
+      headerName: window.innerWidth > 700 ? "Quantity" : 'N',
       renderCell: (params) =>{
         return(
           <div style={{textAlign: 'center', width: '100%'}}>
@@ -62,12 +65,12 @@ export default function Order() {
           </div>
         )
       },
-      width: 160,
+      width: window.innerWidth > 700 ? 160 : 50,
     },
     {
       field: "action",
       headerName: "Action",
-      width: 150,
+      width: window.innerWidth > 700 ? 150 : 60,
       renderCell: (params) => {
         return (
           <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
@@ -117,13 +120,15 @@ export default function Order() {
         <div className="orderShow">
           <div className="orderShowBottom">
             <span className="orderShowTitle">Status</span>
+
             <div className="orderShowInfo">
               <Inventory2RoundedIcon className='orderShowIcon'  />
               <button className={"widgetLgButton " + order?.status}>{
                 order?.status
               }</button> 
             </div> 
-            <span className="orderShowTitle">Account Details</span>
+            <span className="orderShowTitle">Buyer Details</span>
+
             <div className="orderShowInfo">
               <PermIdentity className="orderShowIcon" />
               <span className="orderShowInfoTitle">{order?.userId}</span>
@@ -136,6 +141,7 @@ export default function Order() {
             )}
 
             <span className="orderShowTitle">Order Details</span>
+
             <div className="orderShowInfo">
               <NumbersIcon className="orderShowIcon" />
               <span className="orderShowInfoTitle">{order?._id}</span>
@@ -149,7 +155,12 @@ export default function Order() {
               <span className="orderShowInfoTitle">{order?.updatedAt}</span>
             </div>   
 
-            <span className="orderShowTitle">Contact Details</span>
+            <span className="orderShowTitle">Delivery Details</span>
+
+            <div className="orderShowInfo">
+              <PermIdentity className="orderShowIcon" />
+              <span className="orderShowInfoTitle">{order?.address?.name}</span>
+            </div>
             <div className="orderShowInfo">
               {(order?.address?.city || order?.address?.country || order?.address?.state) 
               ? (

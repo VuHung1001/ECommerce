@@ -292,7 +292,7 @@ const Cart = () => {
                       </ProductName>
                       <ProductId>
                         <b>ID: </b>
-                        <p>{product._id}</p>
+                        <p style={{wordBreak: 'break-all', whiteSpace: 'normal'}}>{product._id}</p>
                       </ProductId>
                       <ProductType>
                         <b>Type: </b>

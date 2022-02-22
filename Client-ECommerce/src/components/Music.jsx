@@ -104,7 +104,7 @@ const Music = ({category}) => {
         style={{
           width: '25vw',
           position: 'fixed',
-          top: '60px',
+          top: '70px',
           right: '0',
           zIndex: '999',
           transform: 'translateX(calc(100% - 45px))',
