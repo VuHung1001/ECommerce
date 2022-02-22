@@ -2,6 +2,8 @@ import "./widgetSm.css";
 import { Visibility } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import { userRequest } from "../../requestMethods";
+import { Link } from "react-router-dom";
+import User from "../../pages/user/User";
 
 export default function WidgetSm() {
   const [users, setUsers] = useState([]);
@@ -31,11 +33,16 @@ export default function WidgetSm() {
               className="widgetSmImg"
             />
             <div className="widgetSmUser">
-              <span className="widgetSmUsername">{user.username}</span>
+              <span 
+                className="widgetSmUsername"
+                style={user.loginByGoogle ? {whiteSpace: 'pre-line', fontSize: '12px'} : {}}
+              >{user.loginByGoogle ? user.email : user.username}</span>
             </div>
             <button className="widgetSmButton">
+              <Link to={'/admin/user/'+user._id} className='link' element={<User/>}>
               <Visibility className="widgetSmIcon" />
               Display
+              </Link>
             </button>
           </li>
         ))}

@@ -10,9 +10,10 @@ import {
 } from "react-router-dom";
 import UserList from "./pages/userList/UserList";
 import User from "./pages/user/User";
-import NewUser from "./pages/newUser/NewUser";
+// import NewUser from "./pages/newUser/NewUser";
 import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
+import Order from "./pages/order/Order";
 import NewProduct from "./pages/newProduct/NewProduct";
 import Login from "./pages/login/Login";
 import { useSelector } from "react-redux";
@@ -32,8 +33,8 @@ function App() {
     <Router>
       {!isAdmin && (
         <Switch>
-          <Route path="/login" exact element={<Login />}/>
-          <Route path="*" exact element={<Navigate to="/login"/>}/>
+          <Route path="/admin/login" exact element={<Login />}/>
+          <Route path="/admin/*" exact element={<Navigate to="/admin/login"/>}/>
         </Switch>
       )}
       {isAdmin && TOKEN && (
@@ -42,14 +43,15 @@ function App() {
         <div className="container">
           <Sidebar />
           <Switch>
-            <Route path="/" exact element={<Home />}/>
-            <Route path="/users" exact element={<UserList />}/>
-            <Route path="/user/:userId" exact element={ <User />}/>
-            <Route path="/newUser" exact element={<NewUser />}/>
-            <Route path="/products" exact element={<ProductList />}/>
-            <Route path="/product/:productId" exact element={<Product />}/>
-            <Route path="/newproduct" exact element={<NewProduct />}/>
-            <Route path="*" exact element={<Home />}/>
+            <Route path="/admin" exact element={<Home />}/>
+            <Route path="/admin/users" exact element={<UserList />}/>
+            <Route path="/admin/user/:userId" exact element={ <User />}/>
+            {/* <Route path="/admin/newUser" exact element={<NewUser />}/> */}
+            <Route path="/admin/products" exact element={<ProductList />}/>
+            <Route path="/admin/product/:productId" exact element={<Product />}/>
+            <Route path="/admin/newproduct" exact element={<NewProduct />}/>
+            <Route path="/admin/order/:orderId" exact element={<Order />}/>
+            <Route path="/admin/*" exact element={<Navigate to="/admin"/>}/>
           </Switch>
         </div>
         </>

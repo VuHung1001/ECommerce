@@ -38,3 +38,29 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+#result{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.thumbnail {
+  height: 100px;
+  margin: 10px;
+}
+
+.img__close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  transition: all 0.5s ease;
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;  
+  color: grey;
+}
+
+.img__close:hover{
+    transform: scale(1.5);
+}

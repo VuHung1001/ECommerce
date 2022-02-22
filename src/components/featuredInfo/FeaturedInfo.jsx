@@ -10,10 +10,9 @@ export default function FeaturedInfo() {
   useEffect(() => {
     const getIncome = async () => {
       try {
-        const res = await userRequest.get("orders/income");
+        const res = await userRequest.get("/orders/income");
         setIncome(res.data);
         setPerc((res.data[0].total * 100) / res.data[1].total - 100);
-        console.log();
       } catch (err) {console.dir(err)}
     };
     getIncome();
@@ -24,8 +23,8 @@ export default function FeaturedInfo() {
       <div className="featuredItem">
         <span className="featuredTitle">Revenue</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">{income[0]?.total} VND</span>
-          <span className="featuredMoneyRate">
+          <span className="featuredMoney">{income[0]?.total} &#8363;</span>
+          <span className="featuredMoneyRate">  
             %{Math.floor(perc)+" "}
             {perc < 0 ? (
               <ArrowDownward className="featuredIcon negative" />
@@ -34,7 +33,7 @@ export default function FeaturedInfo() {
             )}
           </span>
         </div>
-        <span className="featuredSub">Compared to last month</span>
+        <span className="featuredSub">Compared to last month {income[1]?.total} &#8363;</span>
       </div>
       <div className="featuredItem">
         <span className="featuredTitle">Sales</span>
