@@ -1,8 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { login } from '../redux/apiCalls'
 import { mobile } from '../responsive'
 import {useDispatch, useSelector} from 'react-redux'
+import { Link } from 'react-router-dom'
+import { reset } from '../redux/userRedux'
+import Notification from '../components/Notification'
+import LoginGoogle from '../components/LoginGoogle'
 
 const Container = styled.div`
     width: 100vw;
@@ -50,15 +54,9 @@ const Button = styled.button`
     }
     margin-bottom: 5px;
     &:disabled{
-        color: green;
+        color: orange;
         cursor: not-allowed;
     }
-`
-const Link = styled.a`
-    margin: 5px 0px;
-    font-size: 12px;
-    text-decoration: underline;
-    cursor: pointer;
 `
 const Error = styled.span`
     color: red;
@@ -69,24 +67,62 @@ const Login = () => {
     const [password, setPassword] = useState("")
     const dispatch = useDispatch();
     const {isFetching, error} = useSelector((state) => state.user)
+    const [notifyMes, setNotifyMes] = useState('')
+    const [notifyType, setNotifyType] = useState('info')
+    const [notifyTitle, setNotifyTitle] = useState('')
 
     const handleLogin = (e) => {
         e.preventDefault();
-        login(dispatch, {username, password})
+
+        if(username.trim() !== '' && password.trim() !== ''){
+            try{
+                login(dispatch, {username, password})
+                
+                const timeout = setTimeout(()=>{
+                    !error && window.location.reload()
+                    window.clearTimeout(timeout)
+                }, 1000)                     
+            }
+            catch(err){
+                console.dir(err)
+            }
+        } else {
+            setNotifyMes('Your username or/and password is empty, please insert correctly')
+            setNotifyType('warning')
+            setNotifyTitle('Notice')
+        }
     }
+
+    useEffect(()=>{
+        dispatch(reset())
+        // document.querySelector('#username').focus()
+
+        if(error) {
+            setNotifyMes('Your username or/and password is incorrect, try again')
+            setNotifyType('error')
+            setNotifyTitle('Error')   
+        }
+    }, [dispatch, error])
+
     return (
         <Container>
+            <Notification 
+                title={notifyTitle}
+                message={notifyMes}
+                type={notifyType}
+                duration={100000}
+            />        
             <Wrapper>
                 <Title>SIGN IN</Title>
                 <Form>
                     <Input 
-                        placeholder="username" 
+                        placeholder="username" id='username' required
                         onChange={
                             (e) => setUsername(e.target.value)
                         }
                     />
                     <Input 
-                        placeholder="password" 
+                        placeholder="password" required
                         onChange={
                             (e) => setPassword(e.target.value)
                         }
@@ -96,9 +132,24 @@ const Login = () => {
                         onClick={handleLogin}
                         disabled={isFetching}
                     >LOGIN</Button>
+                    <LoginGoogle/>
                     {error && <Error>Somethings went wrong...</Error>}
-                    <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-                    <Link>CREATE A NEW ACCOUNT</Link>
+                    <Link to='/'
+                        style={{    
+                            margin: '5px 0px',
+                            fontSize: '12px',
+                            textDecoration: 'underline',
+                            cursor: 'pointer',
+                        }}                    
+                    >DON'T REMEMBER THE PASSWORD?</Link>
+                    <Link to='/register'
+                        style={{    
+                            margin: '5px 0px',
+                            fontSize: '12px',
+                            textDecoration: 'underline',
+                            cursor: 'pointer',
+                        }}
+                    >CREATE A NEW ACCOUNT</Link>
                 </Form>
             </Wrapper>
         </Container>
