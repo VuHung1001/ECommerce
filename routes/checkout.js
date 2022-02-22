@@ -145,16 +145,16 @@ router.post("/momo", verifyToken, async (req, res) => {
     "&requestType=" +
     requestType;
   //puts raw signature
-  console.log("--------------------RAW SIGNATURE----------------");
-  console.log(rawSignature);
+  // console.log("--------------------RAW SIGNATURE----------------");
+  // console.log(rawSignature);
   //signature
   let signature = cryptoJs.HmacSHA256(rawSignature, secretKey).toString();
   // var signature = crypto
   //   .createHmac("sha256", secretKey)
   //   .update(rawSignature)
   //   .digest("hex");
-  console.log("--------------------SIGNATURE----------------");
-  console.log(signature);
+  // console.log("--------------------SIGNATURE----------------");
+  // console.log(signature);
 
   //json object send to MoMo endpoint
   const requestBody = JSON.stringify({
@@ -186,23 +186,23 @@ router.post("/momo", verifyToken, async (req, res) => {
   //Send the request and get the response
   const request = await https.request(options, (response) => {
     data = response;
-    console.log(`Status: ${response.statusCode}`);
-    console.log(`Headers: ${JSON.stringify(response.headers)}`);
+    // console.log(`Status: ${response.statusCode}`);
+    // console.log(`Headers: ${JSON.stringify(response.headers)}`);
     response.setEncoding("utf8");
     response.on("data", (body) => {
-      console.log("Body: ");
-      console.log(body);
-      console.log("payUrl: ");
-      console.log(JSON.parse(body).payUrl);
+      // console.log("Body: ");
+      // console.log(body);
+      // console.log("payUrl: ");
+      // console.log(JSON.parse(body).payUrl);
       res.status(response.statusCode).json(body);
     });
     response.on("end", () => {
-      console.log("No more data in response.");
+      // console.log("No more data in response.");
     });
   });
 
   request.on("error", (e) => {
-    console.log(`problem with request: ${e.message}`);
+    // console.log(`problem with request: ${e.message}`);
   });
   // write data to request body
   // console.log("Sending....");
