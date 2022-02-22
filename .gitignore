@@ -8,5 +8,5 @@ node_modules
 yarn.lock
 mp3
 readme.txt
-/Admin-ECommerce
-/Client-ECommerce
+Admin-ECommerce/
+Client-ECommerce/
