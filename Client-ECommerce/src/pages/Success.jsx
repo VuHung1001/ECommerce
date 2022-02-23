@@ -73,7 +73,7 @@ Products that you have purchased: \n
           // delete cart redux state if user reload page
           window.history.replaceState({}, '');
 
-          if(emailRes.data){
+          if(emailRes){
             setIsMailSended(true)
 
             const timeout = setTimeout(()=>{
@@ -116,7 +116,7 @@ Products that you have purchased: \n
         : `You have not pay yet`}
       </p>
       {isMailSended && (<p>
-        Transaction informations was sended to your email
+        Order infors was sended to your email
       </p>)}
       {amount && (<p>
         Your total amount: {amount +20000} &#8363;

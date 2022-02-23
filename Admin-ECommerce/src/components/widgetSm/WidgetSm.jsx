@@ -4,15 +4,20 @@ import { useEffect, useState } from "react";
 import { userRequest } from "../../requestMethods";
 import { Link } from "react-router-dom";
 import User from "../../pages/user/User";
+import { Pagination } from "@mui/material";
 
 export default function WidgetSm() {
   const [users, setUsers] = useState([]);
+  const [page, setPage] = useState(1);
+  const rowPerPage = 8;
+  const [totalPage, setTotalPage] = useState(1);  
 
   useEffect(() => {
     const getUsers = async () => {
       try {
         const res = await userRequest.get("users/?new=true");
         setUsers(res.data);
+        setTotalPage(Math.ceil(res.data.length / rowPerPage))
       } catch (err){console.dir(err)}
     };
     getUsers();
@@ -22,7 +27,7 @@ export default function WidgetSm() {
     <div className="widgetSm">
       <span className="widgetSmTitle">New Join Members</span>
       <ul className="widgetSmList">
-        {users.map((user) => (
+        {users.slice((page-1)*rowPerPage, page * rowPerPage).map((user) => (
           <li className="widgetSmListItem" key={user._id}>
             <img
               src={
@@ -47,6 +52,19 @@ export default function WidgetSm() {
           </li>
         ))}
       </ul>
+      <div style={{
+        marginTop: '15px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 'auto',        
+      }}>
+        <Pagination
+          page={page}
+          count={totalPage}
+          onChange={(e, value) => setPage(value)}
+        />
+      </div>      
     </div>
   );
 }

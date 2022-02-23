@@ -44,12 +44,12 @@ function Momo() {
     // set result message by resultCode
     setResultMessage(
       searchParams.get('resultCode')*1 === 0
-        ? 'Thanh toán thành công'
-        : 'Thanh toán thất bại'
+        ? 'Payment successful'
+        : 'Payment failed'
     )
     //compare our signature and received signature
     if(signature !== searchParams.get('signature')){
-      setResultMessage('Thông tin request không hợp lệ')
+      setResultMessage('Invalid Request information')
     } 
     
     // decode address
@@ -80,7 +80,7 @@ function Momo() {
 Your order id: ${searchParams.get('orderId')}\n
 Bill amount: ${cart.total + 20000}\n
 Your delivery address: ${address?.address}\n
-Your payment method: Momo QR code\n
+Your payment method: Momo Wallet\n
 Products that you have purchased: \n
 <table style='border: 1px solid; border-collapse: collapse;'>
 <thead>
@@ -114,7 +114,7 @@ Products that you have purchased: \n
           window.history.replaceState({}, '');
         }
         
-        if(emailRes.data){
+        if(emailRes){
           setIsMailSended(true)
 
           const timeout = setTimeout(()=>{
@@ -157,7 +157,7 @@ Products that you have purchased: \n
       <p>{resultMessage}</p>
       <p>{orderId
         ? `Order has been created successfully. Your order number is ${orderId}.\n`
-        : `Successful. Your order is being prepared...\n`}
+        : `You have not pay yet\n`}
       </p>
       {isMailSended && (<p>
         Order infors was sended to your email

@@ -25,7 +25,7 @@ export default function UserList() {
     {
       field: "user",
       headerName: "User",
-      width: 150,
+      width: 210,
       renderCell: (params) => {
         return (
           <div className="userListUser">
@@ -37,7 +37,7 @@ export default function UserList() {
               alt= {params.row?.username}
               referrerPolicy="no-referrer"
             />
-            {params.row?.loginByGoogle 
+            {!params.row?.loginByGoogle 
               ? params.row?.username
               : 'Logged with Google'
             }
@@ -73,6 +73,7 @@ export default function UserList() {
 
   return (
     <div className="userList">
+      {users && (
       <DataGrid
         rows={users}
         disableSelectionOnClick
@@ -81,6 +82,7 @@ export default function UserList() {
         rowsPerPageOptions={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100]}
         checkboxSelection
       />
+      )}
     </div>
   );
 }

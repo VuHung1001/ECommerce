@@ -61,6 +61,7 @@ export default function ProductList() {
 
   return (
     <div className="productList">
+      {products && (
       <DataGrid
         rows={products}
         disableSelectionOnClick
@@ -69,6 +70,7 @@ export default function ProductList() {
         rowsPerPageOptions={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100]}
         checkboxSelection
       />
+      )}
     </div>
   );
 }
