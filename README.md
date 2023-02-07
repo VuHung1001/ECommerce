@@ -2,8 +2,8 @@
 
 ## Still under development!!!
 
-## Live demo of shopping pages for clients on Heroku server
-[Figures shop](https://figures-shop.herokuapp.com/)
+## Live demo of shopping pages for clients on Heroku server (Edited: now the site is deployed on railway server)
+[Figures shop](https://figures-shop.up.railway.app/)
 
 ## This project is further developed from project of safak and his youtube channel
 [**safak** GitHub](https://github.com/safak/youtube/tree/mern-ecommerce-app) | 
@@ -20,7 +20,7 @@
   > 
   > **PASS_SEC**          // secret string to encode Password
   > 
-  > **JWT_SEC**           // secret string to create J
+  > **JWT_SEC**           // secret string to create JSON WEB TOKEN
   > 
   > **STRIPE_KEY**        // secret key of Stripe payment method
   > 
@@ -32,7 +32,7 @@
   > 
   > **MY_MAIL_PASSWORD**  // google account application password for MY_MAIL
   > 
-  > **BASE_URL**          // in my case: https://figures-shop.herokuapp.com 
+  > **BASE_URL**          // in my case: https://figures-shop.up.railway.app 
 
 - For ReactJS Client:
   >
@@ -45,3 +45,5 @@
   > **REACT_APP_PASS_SEC**          // Same as API .env
   > 
   > **REACT_APP_GOOGLE_CLIENT_ID**  // ID of Google Oauth to authorization when logging with Google
+  >
+  > **REACT_APP_BASE_URL**          // Same as API .env
