@@ -16,7 +16,7 @@ const BASE_URL = process.env.BASE_URL
 // const BASE_URL_API = "http://localhost:5000"; 
 
 // Notice: Edit BASE_URL in .env, two lines here just for suggesting
-// const BASE_URL = 'https://figures-shop.herokuapp.com'; //for production
+// const BASE_URL = 'https://figures-shop.up.railway.app'; //for production
 // const BASE_URL = "http://localhost:3000"; //for developing
 
 // use stripe api for payment handling

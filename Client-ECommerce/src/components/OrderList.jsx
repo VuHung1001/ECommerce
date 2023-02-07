@@ -57,9 +57,9 @@ export default function WidgetLg() {
           <th className='widgetLgTh'>Action</th>
         </tr>
         </thead>
+        <tbody>
         {orders.slice((page-1)*rowPerPage, page * rowPerPage).map((order, i) => (
-          <tbody key={order?._id}>
-          <tr className="widgetLgTr" >
+          <tr className="widgetLgTr" key={order?._id}>
             {/* <td className="widgetLgUser">
               <span className="widgetLgName">{order?._id}</span>
             </td> */}
@@ -74,8 +74,8 @@ export default function WidgetLg() {
               <Link to={'/account/order/'+order?._id} className='link'>View</Link>
             </td>
           </tr>
-          </tbody>
         ))}
+        </tbody>
       </table>
       <div style={{
         marginTop: '15px',
