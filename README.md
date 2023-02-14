@@ -24,9 +24,11 @@
   > 
   > **STRIPE_KEY**        // secret key of Stripe payment method
   > 
-  > **MOMO_SECRET_KEY**   // secret key of MoMo payment method
+  > **MOMO_SECRET_KEY**   // secret key of your MoMo business account to customer use MoMo payment method
   > 
-  > **MOMO_ACCESS_KEY**   // access key of MoMo payment method
+  > **MOMO_ACCESS_KEY**   // access key of your MoMo business account
+  > 
+  > **MOMO_PARTNER_CODE** // partner code of your MoMo business account
   > 
   > **MY_MAIL**           // admin mail to send message or notification to user (I use gmail)
   > 
@@ -47,3 +49,14 @@
   > **REACT_APP_GOOGLE_CLIENT_ID**  // ID of Google Oauth to authorization when logging with Google
   >
   > **REACT_APP_BASE_URL**          // Same as API .env
+
+## Switching between developing and production mode
+- Edit the BASE_URL value in **requestMethod.js** of client and admin directories
+- Edit BASE_URL_API or BASE_URL
+`var ipnUrl = BASE_URL_API +'/api/checkout/ipn/momo';`
+in **checkout.js** and .env of api
+- Comment or unset comment at NODE_ENV 
+`process.env.NODE_ENV`
+and IF statement block below that in **index.js** of api
+- Just run `npm start` in API directory (main directory) for production mode\
+But run `npm start` in all API, Client, Admin directories for developing mode
