@@ -11,9 +11,10 @@ const {
 
 const accessKey = process.env.MOMO_ACCESS_KEY;
 const secretKey = process.env.MOMO_SECRET_KEY;
+const partnerCode = process.env.MOMO_PARTNER_CODE;
 const BASE_URL = process.env.BASE_URL
 // Uncomment this line and replace ipn url in momo method when developing
-// const BASE_URL_API = "http://localhost:5000"; 
+const BASE_URL_API = "http://localhost:5000";
 
 // Notice: Edit BASE_URL in .env, two lines here just for suggesting
 // const BASE_URL = 'https://figures-shop.up.railway.app'; //for production
@@ -109,13 +110,13 @@ router.post("/momo", verifyToken, async (req, res) => {
   const amount = req.body.amount
   const address = JSON.stringify(req.body.address)
 
-  var partnerCode = "MOMO0T1D20220107";
   var requestId = uuidv4();
   var orderId = new mongoose.Types.ObjectId();
   var orderInfo = "pay with MoMo";
   var redirectUrl = BASE_URL +"/resultMomo";
   var ipnUrl = BASE_URL +'/api/checkout/ipn/momo'; //  BASE_URL_API for develope, BASE_URL for production
   var requestType = "captureWallet";
+  // var partnerClientId = 'hungvugithub@gmail.com';
   //pass empty value to extraData if your merchant does not have stores
   var extraData = cryptoJs.enc.Base64.stringify(
     cryptoJs.enc.Utf8.parse(address)
@@ -136,6 +137,8 @@ router.post("/momo", verifyToken, async (req, res) => {
     orderId +
     "&orderInfo=" +
     orderInfo +
+    // "&partnerClientId=" +
+    // partnerClientId +
     "&partnerCode=" +
     partnerCode +
     "&redirectUrl=" +
@@ -149,6 +152,7 @@ router.post("/momo", verifyToken, async (req, res) => {
   // console.log(rawSignature);
   //signature
   let signature = cryptoJs.HmacSHA256(rawSignature, secretKey).toString();
+  // const crypto = require('crypto')
   // var signature = crypto
   //   .createHmac("sha256", secretKey)
   //   .update(rawSignature)
@@ -159,7 +163,7 @@ router.post("/momo", verifyToken, async (req, res) => {
   //json object send to MoMo endpoint
   const requestBody = JSON.stringify({
     partnerCode,
-    accessKey,
+    // accessKey,
     requestId,
     amount,
     orderId,
@@ -170,7 +174,11 @@ router.post("/momo", verifyToken, async (req, res) => {
     requestType,
     signature,
     lang: "vi",
+    // partnerClientId,
+    // orderGroupId: "",
+    // autoCapture: true
   });
+
   //Create the HTTPS objects
   const https = require("https");
   const options = {
@@ -179,7 +187,7 @@ router.post("/momo", verifyToken, async (req, res) => {
     path: "/v2/gateway/api/create",
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json; charset=UTF-8",
       "Content-Length": Buffer.byteLength(requestBody),
     },
   };
