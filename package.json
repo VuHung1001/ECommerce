@@ -12,7 +12,7 @@
     "build": "npm run production-build",
     "heroku-postbuild": "(NPM_CONFIG_PRODUCTION=false); (npm install --prefix ./Client-ECommerce && npm run build ./Client-ECommerce); (npm install --prefix ./Admin-ECommerce && npm run build ./Admin-ECommerce)",
     "railway-build": "export NODE_OPTIONS=--openssl-legacy-provider && CI=false && cd Client-ECommerce && npm install && npm run build && cd .. && cd Admin-ECommerce && npm install && npm run build",
-    "production-build": "cd Client-ECommerce && npm install && npm run build && cd .. && cd Admin-ECommerce && npm install && npm run build"
+    "production-build": "npm install && cd Client-ECommerce && npm install && npm run build && cd .. && cd Admin-ECommerce && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
