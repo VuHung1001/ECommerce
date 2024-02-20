@@ -36,7 +36,7 @@ export const categories = [
     },
     {
         id: 2,
-        img: "https://comicvine.gamespot.com/a/uploads/scale_small/0/40/5213245-dc_logo_blue_final.jpg",
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/DC_Comics_logo.svg/600px-DC_Comics_logo.svg.png",
         title: "DC-Comics",
     },
     {

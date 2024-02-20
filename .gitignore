@@ -10,3 +10,4 @@ mp3
 readme.txt
 build/
 package-lock.json
+yarn.lock
