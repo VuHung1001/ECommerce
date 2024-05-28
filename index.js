@@ -15,6 +15,8 @@ const mail = require("./routes/mail");// mail route
 const cors = require("cors");
 // const cookieSession = require('cookie-session');
 
+// prepare for mongoose version 7
+mongoose.set('strictQuery', false);
 
 mongoose
     .connect(process.env.MONGO_URL)

@@ -10,9 +10,6 @@
     "@mui/material": "^5.4.1",
     "@mui/styles": "^5.4.1",
     "@reduxjs/toolkit": "^1.7.1",
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
     "axios": "^0.24.0",
     "firebase": "^9.6.1",
     "javascript-time-ago": "^2.3.10",
@@ -26,6 +23,11 @@
     "redux-persist": "^6.0.0",
     "timeago.js": "^4.0.2",
     "web-vitals": "^2.1.2"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0"
   },
   "scripts": {
     "start": "react-scripts start",
