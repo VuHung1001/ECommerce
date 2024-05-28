@@ -12,9 +12,9 @@ const {
 const accessKey = process.env.MOMO_ACCESS_KEY;
 const secretKey = process.env.MOMO_SECRET_KEY;
 const partnerCode = process.env.MOMO_PARTNER_CODE;
-const BASE_URL = process.env.BASE_URL
-// Uncomment this line and replace ipn url in momo method when developing
-const BASE_URL_API = "http://localhost:5000";
+const BASE_URL = process.env.BASE_URL;
+// const BASE_URL = "https://figures-shop.up.railway.app";
+// const BASE_URL = "http://localhost:5000";
 
 // Notice: Edit BASE_URL in .env, two lines here just for suggesting
 // const BASE_URL = 'https://figures-shop.up.railway.app'; //for production
@@ -114,7 +114,7 @@ router.post("/momo", verifyToken, async (req, res) => {
   var orderId = new mongoose.Types.ObjectId();
   var orderInfo = "pay with MoMo";
   var redirectUrl = BASE_URL +"/resultMomo";
-  var ipnUrl = BASE_URL +'/api/checkout/ipn/momo'; //  BASE_URL_API for develope, BASE_URL for production
+  var ipnUrl = BASE_URL +'/api/checkout/ipn/momo';
   var requestType = "captureWallet";
   // var partnerClientId = 'hungvugithub@gmail.com';
   //pass empty value to extraData if your merchant does not have stores
