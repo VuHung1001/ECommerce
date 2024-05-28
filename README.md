@@ -34,7 +34,7 @@
   > 
   > **MY_MAIL_PASSWORD**  // google account application password for MY_MAIL
   > 
-  > **BASE_URL**          // in my case: https://figures-shop.up.railway.app 
+  > **BASE_URL**          // in my case: https://figures-shop.up.railway.app for production and http://localhost:5000 for developing
 
 - For ReactJS Client:
   >
@@ -50,13 +50,15 @@
   >
   > **REACT_APP_BASE_URL**          // Same as API .env
 
+- For ReactJS Admin: (It is not necessary on the production server because the REACT_APP_BASE_URL env variable already exists in the client env section)
+  >
+  > **REACT_APP_BASE_URL**          // Same as API .env
+
 ## Switching between developing and production mode
-- Edit the BASE_URL value in **requestMethod.js** of client and admin directories
-- Edit BASE_URL_API or BASE_URL
-`var ipnUrl = BASE_URL_API +'/api/checkout/ipn/momo';`
-in **checkout.js** and .env of api
-- Comment or unset comment at NODE_ENV 
+- Edit the **REACT_APP_BASE_URL** in both .env of Admin and Client (https://figures-shop.up.railway.app for production and http://localhost:5000 for developing)
+- Edit **BASE_URL** in .env of API (https://figures-shop.up.railway.app for production and http://localhost:5000 for developing)
+- Comment or unset comment at **NODE_ENV** 
 `process.env.NODE_ENV`
-and IF statement block below that in **index.js** of api
+and IF statement block below that in **index.js** of API
 - Just run `npm start` in API directory (main directory) for production mode\
 But run `npm start` in all API, Client, Admin directories for developing mode
