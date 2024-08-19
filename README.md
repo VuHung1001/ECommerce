@@ -9,7 +9,7 @@
 [**safak** GitHub](https://github.com/safak/youtube/tree/mern-ecommerce-app) | 
 [**Lama dev** Youtube](https://www.youtube.com/c/LamaDev)
 
-## In **master** branch, I put **Admin-ECommerce**(Admin UI, ReactJS) and **Client-ECommerce**(Client UI, ReactJS) inside API repo (ExpressJS)
+## In **master** branch, I put **Admin-ECommerce**(Admin UI, ReactJS) and **Client-ECommerce**(Client UI, ReactJS) inside API directory (ExpressJS)
 
 ## Environment variables in .env file contain:
 - For ExpressJS API :
@@ -55,11 +55,7 @@
   > **VITE_BASE_URL**          // Same as API .env
 
 ## Switching between developing and production mode
-- Edit the **VITE_BASE_URL** in both .env of Admin and Client (https://figures-shop.up.railway.app for production and http://localhost:5000 for developing)
-- Edit **BASE_URL** in .env of API (https://figures-shop.up.railway.app for production and http://localhost:5000 for developing)
-- Comment or unset comment at **NODE_ENV** 
-`process.env.NODE_ENV`
-and IF statement block below that in **index.js** of API
+- Edit the **VITE_BASE_URL** in both .env of Admin and Client and **BASE_URL** in .env of API (https://figures-shop.up.railway.app for production and http://localhost:5000 for developing)
 - Just run `npm start` in API directory (main directory) for production mode\
 But run `npm start` in all API, Client, Admin directories for developing mode
 - Build code for production => see all build script commands in package.json

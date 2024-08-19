@@ -42,9 +42,7 @@ app.use("/api/orders", orderRoute);
 app.use("/api/checkout", checkoutRoute);
 app.use("/api/mail", mail);
 
-// comment this block for developing stage -- start
-process.env.NODE_ENV = 'production';
-
+// Serve static files in production
 if(process.env.NODE_ENV === 'production'){
     app.use(express.static(path.resolve(__dirname, "./Client-ECommerce/build")));
     app.use(express.static(path.resolve(__dirname, "./Admin-ECommerce/build")));
@@ -57,7 +55,6 @@ if(process.env.NODE_ENV === 'production'){
         res.sendFile(path.resolve(__dirname, './Client-ECommerce/build', 'index.html'));
     });
 }
-// comment this block for developing stage -- end
 
 app.listen(process.env.PORT || 5000, () => {
     console.log(`Backend server is running on port ${process.env.PORT || 5000}`);
