@@ -62,3 +62,4 @@
 and IF statement block below that in **index.js** of API
 - Just run `npm start` in API directory (main directory) for production mode\
 But run `npm start` in all API, Client, Admin directories for developing mode
+- Build code for production => see all build script commands in package.json
