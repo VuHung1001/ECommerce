@@ -52,7 +52,7 @@ export default function User() {
     if(password && !hadFoundedPassword){
       const hashedPassword = CryptoJS.AES.decrypt(
         password,
-        process.env.REACT_APP_PASS_SEC
+        import.meta.env.VITE_PASS_SEC
       );
         
       // original password was found from db

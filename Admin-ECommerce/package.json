@@ -18,22 +18,19 @@
     "react-material-ui-carousel": "^3.2.0",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
-    "react-scripts": "5.0.0",
     "recharts": "^2.1.8",
     "redux-persist": "^6.0.0",
     "timeago.js": "^4.0.2",
     "web-vitals": "^2.1.2"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0"
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "eslintConfig": {
     "extends": [
@@ -55,5 +52,5 @@
   },
   "engines": {
     "node": "16.13.1"
-  }  
+  }
 }

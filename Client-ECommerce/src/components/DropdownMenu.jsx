@@ -79,7 +79,7 @@ const DropdownMenu = ({handleClose, setNotifyMes, setNotifyTitle, setNotifyType}
           {user?.loginByGoogle ? (
             <MenuItem onClick={handleClose}>
               <GoogleLogout
-                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
                 buttonText="Logout"
                 onLogoutSuccess={handleLogout}
               ></GoogleLogout>

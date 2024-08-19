@@ -12,8 +12,8 @@ function Momo() {
   const [resultMessage, setResultMessage] = useState('')
   /* eslint-disable-next-line */
   const [searchParams, setSearchParams] = useSearchParams();
-  const accessKey = process.env.REACT_APP_MOMO_ACCESS_KEY;
-  const secretKey = process.env.REACT_APP_MOMO_SECRET_KEY;
+  const accessKey = import.meta.env.VITE_MOMO_ACCESS_KEY;
+  const secretKey = import.meta.env.VITE_MOMO_SECRET_KEY;
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const currentUser = useSelector((state) => state.user.currentUser);

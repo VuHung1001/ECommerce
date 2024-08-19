@@ -8,7 +8,7 @@ import DeliveryDetail from "./DeliveryDetail";
 import { useState, useEffect } from "react";
 import Notification from "./Notification";
 
-const KEY = process.env.REACT_APP_STRIPE;
+const KEY = import.meta.env.VITE_STRIPE;
 
 const SelectPayment = (props) => {
   const cart = useSelector((state) => state.cart);

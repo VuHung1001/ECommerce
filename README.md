@@ -38,24 +38,24 @@
 
 - For ReactJS Client:
   >
-  > **REACT_APP_STRIPE**            // Public key for Stripe payment method
+  > **VITE_STRIPE**            // Public key for Stripe payment method
   > 
-  > **REACT_APP_MOMO_SECRET_KEY**   // Same as API .env
+  > **VITE_MOMO_SECRET_KEY**   // Same as API .env
   > 
-  > **REACT_APP_MOMO_ACCESS_KEY**   // Same as API .env
+  > **VITE_MOMO_ACCESS_KEY**   // Same as API .env
   > 
-  > **REACT_APP_PASS_SEC**          // Same as API .env
+  > **VITE_PASS_SEC**          // Same as API .env
   > 
-  > **REACT_APP_GOOGLE_CLIENT_ID**  // ID of Google Oauth to authorization when logging with Google
+  > **VITE_GOOGLE_CLIENT_ID**  // ID of Google Oauth to authorization when logging with Google
   >
-  > **REACT_APP_BASE_URL**          // Same as API .env
+  > **VITE_BASE_URL**          // Same as API .env
 
-- For ReactJS Admin: (It is not necessary on the production server because the REACT_APP_BASE_URL env variable already exists in the client env section)
+- For ReactJS Admin: (It is not necessary on the production server because the VITE_BASE_URL env variable already exists in the client env section)
   >
-  > **REACT_APP_BASE_URL**          // Same as API .env
+  > **VITE_BASE_URL**          // Same as API .env
 
 ## Switching between developing and production mode
-- Edit the **REACT_APP_BASE_URL** in both .env of Admin and Client (https://figures-shop.up.railway.app for production and http://localhost:5000 for developing)
+- Edit the **VITE_BASE_URL** in both .env of Admin and Client (https://figures-shop.up.railway.app for production and http://localhost:5000 for developing)
 - Edit **BASE_URL** in .env of API (https://figures-shop.up.railway.app for production and http://localhost:5000 for developing)
 - Comment or unset comment at **NODE_ENV** 
 `process.env.NODE_ENV`
