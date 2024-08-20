@@ -1,13 +1,14 @@
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.development.*
+.env.test.*
+.env.production.*
 node_modules
 .vscode
 yarn.lock
 mp3
 readme.txt
 build/
+dist/
 package-lock.json
 yarn.lock
