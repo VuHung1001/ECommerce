@@ -1,0 +1,10 @@
+{
+    "plugins": [
+        ["babel-plugin-styled-components", {
+            "displayName": true,// false: Turn off class names based on component names for production
+            "fileName": true,  // false: Removes the file name from the class name in production
+            "minify": false,   // true: Minifies the styles in production
+            "pure": false       // true: Marks styled components as pure for dead code elimination            
+        }]
+    ]
+}
