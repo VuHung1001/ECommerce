@@ -3,7 +3,18 @@ import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react({
+    babel: {
+      plugins: [
+        ["babel-plugin-styled-components", {
+          "displayName": true,// false: Turn off class names based on component names for production
+          "fileName": true,  // false: Removes the file name from the class name in production
+          "minify": false,   // true: Minifies the styles in production
+          "pure": false       // true: Marks styled components as pure for dead code elimination            
+        }]
+      ]
+    }    
+  })],
   build: { 
     outDir: 'build', // Specify the output directory here
     rollupOptions: {

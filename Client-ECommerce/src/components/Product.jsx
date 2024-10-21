@@ -90,28 +90,37 @@ const Product = ({item}) => {
     const dispatch = useDispatch();
     const currentPage = window.location.href.split('/')[3];
     
-    const addToCart = ()=>{
+    const addToCart = (event)=>{
+        event.stopPropagation();
+        event.preventDefault();
         const quantity = 1;
         dispatch(addProduct({...item, quantity}))
+    }
+
+    const addToFavorite = (event) => {
+        event.stopPropagation();
+        event.preventDefault();        
     }
 
     return (
         <Container page={currentPage}>
             <Circle/>
             <Image src={item.img[0]}/>
-            <Icons>
-                <Icon onClick={addToCart}>
-                    <ShoppingCartOutlined/>
-                </Icon>
-                <Icon>
+            <Link to={`/product/${item._id}`}>
+                <Icons>
+                    <Icon onClick={addToCart}>
+                        <ShoppingCartOutlined/>
+                    </Icon>
                     <Link to={`/product/${item._id}`}>
-                    <SearchOutlined/>
+                        <Icon>
+                            <SearchOutlined/>
+                        </Icon>
                     </Link>
-                </Icon>
-                <Icon>
-                    <FavoriteBorderOutlined/>
-                </Icon>
-            </Icons>
+                    <Icon onClick={addToFavorite}>
+                        <FavoriteBorderOutlined/>
+                    </Icon>
+                </Icons>
+            </Link>
             <Info>
                 <Span><b>{item.title}</b></Span>
                 <Span>{item.price} &#8363;</Span>

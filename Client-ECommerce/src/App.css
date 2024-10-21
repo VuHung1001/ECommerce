@@ -1,8 +1,30 @@
+/* For browsers that support the standard scrollbar properties */
+* {
+    scrollbar-width: thin;
+}
+
+/* For WebKit browsers (e.g., Chrome, Safari) */
+*::-webkit-scrollbar {
+    width: 8px !important; /* Set the width of the scrollbar */
+    height: 8px !important; /* Set the height of the scrollbar (for horizontal scroll) */
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #d4aa70 !important; /* Color of the scrollbar thumb */
+    border-radius: 8px !important; /* Rounded corners for the scrollbar thumb */
+}
+
+*::-webkit-scrollbar-track {
+    background-color: #e4e4e4 !important; /* Color of the scrollbar track */
+    border-radius: 8px !important; /* Rounded corners for the scrollbar track */
+}
+
 .link{
     text-decoration: none;
     color: inherit;
     cursor: pointer;
 }
+
 @media only screen and (max-width: 700px){
     audio {
         width: 100vw !important;

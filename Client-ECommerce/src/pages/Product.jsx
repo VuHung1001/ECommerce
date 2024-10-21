@@ -13,6 +13,7 @@ import Newsletter from "../components/Newsletter";
 import { addProduct } from "../redux/cartRedux";
 import { publicRequest } from "../requestMethods";
 import { mobile } from "../responsive";
+import './product.css';
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -30,6 +31,7 @@ const ImgContainer = styled.div`
   ${'' /* margin-right: 50px; */}
   ${mobile({ maxWidth: '100%', width: '100%', height: '70vh', margin: '30px 0px'})}
 `;
+
 const Arrow = styled.div`
     width: 50px;
     height: 50px;
@@ -383,7 +385,7 @@ const Product = () => {
             }}    
             NavButton={({onClick, className, style, next, prev}) => {
                 return (
-                    <Arrow id='carouselArrow' onClick={onClick} className={className} style={style}>
+                    <Arrow id='carouselArrow' onClick={onClick} className={className + (next ? 'right' : 'left')} style={style}>
                         {next && <ArrowRightOutlined/>}
                         {prev && <ArrowLeftOutlined/>}
                     </Arrow>

@@ -1,0 +1,4 @@
+/* css right arrow of carousels */
+div:has([class*="Arrow"].right) {
+    right: 50px;
+}

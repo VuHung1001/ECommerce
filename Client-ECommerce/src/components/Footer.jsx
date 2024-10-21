@@ -96,7 +96,7 @@ const Footer = () => {
           // setTitle("Welcome");
         }
       } catch (err) {
-        console.dir(err);
+        // console.dir(err);
         if (err?.response?.data === "Token is not valid!") {
           setMessage("You are not logged in <br/> or your login session has expired<br/>, please login again");
           setType("warning");
@@ -110,7 +110,7 @@ const Footer = () => {
       }
     };
 
-    authorize();
+    // authorize();
   }, [user]);
 
   return (
