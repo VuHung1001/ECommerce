@@ -31,7 +31,7 @@ const LoginGoogle = ()=>{
             img: res.profileObj.imageUrl
           }
   
-          const checkUserRes = await publicRequest.get("/auth/checkUsername/"+user.username);
+          const checkUserRes = await publicRequest.get("/auth/checkUsername/"+ user.username + "?email="+user.email);
   
           if(checkUserRes.data === 'OK'){
             const registerRes = await publicRequest.post("/auth/register", user);
@@ -53,9 +53,11 @@ const LoginGoogle = ()=>{
           setNotifyTitle('Notice')      
         }
       } else {
-        setNotifyMes(res?.error)
-        setNotifyType('warning')
-        setNotifyTitle('Notice')           
+        if (res?.error !== "popup_closed_by_user") {
+          setNotifyMes(res?.error)
+          setNotifyType('warning')
+          setNotifyTitle('Notice')           
+        }
       }
     } catch(err){
       console.dir(err)
