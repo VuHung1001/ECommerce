@@ -13,24 +13,26 @@ router.get('/authorize', verifyToken, async (req, res) => {
 
 //CHECK USERNAME EXISTS
 router.get('/checkUsername/:username', async (req, res) => {
+  // const user = await User.findOne({
+  //   $or: [
+  //     { username: req.params.username },
+  //     { email: req.query.email }
+  //   ]
+  // });
+  // if( user.username === req.params.username ) return res.status(202).send("Username already exists"); 
+  // else if( user.email === req.query.email ) return res.status(409).send("Email already exists");
+  // else return res.status(200).send('OK')    
   const user = await User.findOne(
     {
       username: req.params.username
     }
   );
-  if( user ) return res.status(201).send("Username already exists"); 
+  if( user ) return res.status(202).send("Username already exists"); 
   else return res.status(200).send('OK') 
 })
 
 //REGISTER
 router.post("/register", async (req, res) => {
-  const user = await User.findOne(
-    {
-      username: req.body.username
-    }
-  );
-  if( user ) return res.status(409).json("Username already exists");
-  
   const newUser = new User({
     username: req.body.username,
     email: req.body.email,
