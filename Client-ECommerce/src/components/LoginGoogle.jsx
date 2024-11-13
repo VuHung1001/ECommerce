@@ -1,4 +1,5 @@
 import {GoogleLogin} from 'react-google-login'
+import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux'
 import axios from 'axios';
 import {useState, useEffect} from 'react'
@@ -13,6 +14,7 @@ const LoginGoogle = ()=>{
   const [notifyMes, setNotifyMes] = useState('')
   const [notifyType, setNotifyType] = useState('info')
   const [notifyTitle, setNotifyTitle] = useState('')
+  const navigate = useNavigate();
 
   const responseGoogle = async (res)=>{
     try {
@@ -43,7 +45,9 @@ const LoginGoogle = ()=>{
             user.password && login(dispatch, user);
           }
           const timeout = setTimeout(()=>{
-            !error && window.location.reload()
+            if (!error) {
+              navigate("/");
+            }
             window.clearTimeout(timeout)
           }, 1000) 
   
