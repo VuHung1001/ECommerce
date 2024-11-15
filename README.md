@@ -5,10 +5,6 @@
 ## Live demo of shopping pages for clients on Heroku server (Edited: now the site is deployed on railway server)
 [Figures shop](https://figures-shop.up.railway.app/)
 
-## This project is further developed from project of safak and his youtube channel
-[**safak** GitHub](https://github.com/safak/youtube/tree/mern-ecommerce-app) | 
-[**Lama dev** Youtube](https://www.youtube.com/c/LamaDev)
-
 ## In **master** branch, I put **Admin-ECommerce**(Admin UI, ReactJS) and **Client-ECommerce**(Client UI, ReactJS) inside API directory (ExpressJS)
 
 ## Environment variables in .env file contain:
