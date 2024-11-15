@@ -91,9 +91,9 @@ const Footer = () => {
       try {
         const res = await userRequest.get("/auth/authorize");
         if (res?.data === "Logged in") {
-          // setMessage("Hello "+user?.currentUser.username);
-          // setType("success");
-          // setTitle("Welcome");
+          setMessage("Hello "+user?.currentUser.username);
+          setType("success");
+          setTitle("Welcome");
         }
       } catch (err) {
         // console.dir(err);
@@ -118,7 +118,7 @@ const Footer = () => {
       <Notification title={title} message={message} type={type} />
       <GoToTop />
       <Left>
-        <Logo>ROBOS</Logo>
+        <Logo>FIGURES</Logo>
         <Desc>
           Curabitur gravida nisi at nibh. In hac habitasse platea dictumst.
           Aliquam augue quam, sollicitudin vitae , consectetuer eget, rutrum at,
@@ -163,7 +163,7 @@ const Footer = () => {
           <Phone style={{ marginRight: "10px" }} /> +84 123 456 789
         </ContactItem>
         <ContactItem>
-          <Mail style={{ marginRight: "10px" }} /> contact@robos.com
+          <Mail style={{ marginRight: "10px" }} /> contact@figures.com
         </ContactItem>
         <Payment src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" />
       </Right>

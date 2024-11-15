@@ -6,7 +6,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Success from "./pages/Success";
 import Momo from "./pages/MomoResult";
-import { useSelector} from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
 import {
   BrowserRouter as Router,
   Routes as Switch,
@@ -16,10 +16,32 @@ import {
 import './App.css'
 import Account from "./pages/Account";
 import AccountOrder from "./pages/AccountOrder";
+import { useEffect } from "react";
+import { resetNotify } from "./redux/notifyRedux";
 
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      dispatch(resetNotify());
+
+      // Custom message for the unload event
+      event.preventDefault();
+      event.returnValue = ""; // Required for older browsers
+    };
+
+    // Add the event listener for beforeunload
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    // Cleanup the event listener
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };    
+  }, [dispatch]);
+
   return (
     <Router>
       <Switch>
