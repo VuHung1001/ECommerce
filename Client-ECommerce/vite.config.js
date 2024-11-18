@@ -28,4 +28,9 @@ export default defineConfig({
       },
     },
   },  
+  server: {
+    host: 'localhost',
+    port: parseInt(process.env.VITE_DEVELOPING_FRONTEND_PORT) || 3000,
+    open: true  // Optional: Automatically open the browser when the server starts
+  }  
 });

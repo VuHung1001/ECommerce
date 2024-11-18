@@ -81,41 +81,8 @@ const Payment = styled.img`
 `;
 
 const Footer = () => {
-  const user = useSelector((state) => state.user);
-  const [message, setMessage] = useState("");
-  const [type, setType] = useState("info");
-  const [title, setTitle] = useState("");
-
-  useEffect(() => {
-    const authorize = async () => {
-      try {
-        const res = await userRequest.get("/auth/authorize");
-        if (res?.data === "Logged in") {
-          setMessage("Hello "+user?.currentUser.username);
-          setType("success");
-          setTitle("Welcome");
-        }
-      } catch (err) {
-        // console.dir(err);
-        if (err?.response?.data === "Token is not valid!") {
-          setMessage("You are not logged in <br/> or your login session has expired<br/>, please login again");
-          setType("warning");
-          setTitle("Notice");
-        }
-        if (err?.response?.status === 401) {
-          setMessage("You are not logged in");
-          setType("warning");
-          setTitle("Notice");
-        }
-      }
-    };
-
-    // authorize();
-  }, [user]);
-
   return (
     <Container>
-      <Notification title={title} message={message} type={type} />
       <GoToTop />
       <Left>
         <Logo>FIGURES</Logo>

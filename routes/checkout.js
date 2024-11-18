@@ -12,13 +12,9 @@ const {
 const accessKey = process.env.MOMO_ACCESS_KEY;
 const secretKey = process.env.MOMO_SECRET_KEY;
 const partnerCode = process.env.MOMO_PARTNER_CODE;
-const BASE_URL = process.env.BASE_URL;
-// const BASE_URL = "https://figures-shop.up.railway.app";
-// const BASE_URL = "http://localhost:5000";
-
-// Notice: Edit BASE_URL in .env, two lines here just for suggesting
-// const BASE_URL = 'https://figures-shop.up.railway.app'; //for production
-// const BASE_URL = "http://localhost:3000"; //for developing
+const BASE_URL = process.env.NODE_ENV === 'production' 
+  ? process.env.BASE_URL 
+  : process.env.DEVELOPING_FRONTEND_URL;
 
 // use stripe api for payment handling
 router.post("/stripe", verifyToken, (req, res) => {

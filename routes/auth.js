@@ -8,7 +8,7 @@ const {
 
 //CHECK LOGGED IN
 router.get('/authorize', verifyToken, async (req, res) => {
-  res.status(202).send('Logged in')
+  res.status(202).send('authorized')
 })
 
 //CHECK USERNAME EXISTS

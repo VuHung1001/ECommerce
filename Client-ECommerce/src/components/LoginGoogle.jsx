@@ -1,5 +1,5 @@
 import {GoogleLogin} from 'react-google-login'
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux'
 import axios from 'axios';
 import {useState, useEffect} from 'react'
@@ -15,6 +15,10 @@ const LoginGoogle = ()=>{
   const [notifyType, setNotifyType] = useState('info')
   const [notifyTitle, setNotifyTitle] = useState('')
   const navigate = useNavigate();
+  const location = useLocation();
+
+ // Get the previous path from location state, default to homepage
+ const previousPage = location.state?.from || "/";  
 
   const responseGoogle = async (res)=>{
     try {
@@ -46,7 +50,7 @@ const LoginGoogle = ()=>{
           }
           const timeout = setTimeout(()=>{
             if (!error) {
-              navigate("/");
+              navigate(previousPage);
             }
             window.clearTimeout(timeout)
           }, 1000) 

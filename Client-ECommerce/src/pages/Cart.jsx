@@ -212,9 +212,9 @@ const Cart = () => {
         setType('warning')
         setTitle('Notice')
         const timeout = setTimeout(()=>{
-          navigate('/login')
+          navigate('/login', { state: { from: location.pathname } })
           window.clearTimeout(timeout)
-        }, 4000)
+        }, 3000)
     }
     document.querySelector(".payment-container").style.display = "block";
   };

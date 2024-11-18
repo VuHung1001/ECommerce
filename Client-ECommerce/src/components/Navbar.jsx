@@ -361,7 +361,7 @@ const Navbar = ({ category }) => {
           </Menu>
           <Link to="/cart">
             <MenuItem>
-              <Badge badgeContent={quantity} color="primary">
+              <Badge badgeContent={quantity} color="primary" overlap="rectangular">
                 <ShoppingCartRoundedIcon style={{ color: "#008080" }} />
               </Badge>
             </MenuItem>
