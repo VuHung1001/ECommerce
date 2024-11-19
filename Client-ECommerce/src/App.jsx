@@ -71,12 +71,14 @@ const App = () => {
         <Route exact path="/products" element={<ProductList/>}/>
         <Route exact path="/products/:category" element={<ProductList/>}/>
         <Route exact path="/product/:id" element={<Product/>}/>
-        <Route exact path="/login" element={
+        {/* <Route exact path="/login" element={
           isAuthorized ? <Navigate to={-1} /> : <Login/>
         }/>
         <Route exact path="/register" element={
           isAuthorized ? <Navigate to={-1} /> : <Register/>
-        }/>
+        }/> */}
+        <Route exact path="/login" element={<Login/>}/>
+        <Route exact path="/register" element={<Register/>}/>
         <Route exact path="/logout" element={<Home/>}/>
         <Route exact path="/cart" element={<Cart/>}/>
         {isAuthorized && (

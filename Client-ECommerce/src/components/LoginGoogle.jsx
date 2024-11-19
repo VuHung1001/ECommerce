@@ -61,11 +61,11 @@ const LoginGoogle = ()=>{
           setNotifyTitle('Notice')      
         }
       } else {
-        if (res?.error !== "popup_closed_by_user") {
-          setNotifyMes(res?.error)
-          setNotifyType('warning')
-          setNotifyTitle('Notice')           
-        }
+        // if (res?.error !== "popup_closed_by_user") {
+        //   setNotifyMes(res?.error)
+        //   setNotifyType('warning')
+        //   setNotifyTitle('Notice')           
+        // }
       }
     } catch(err){
       console.dir(err)
