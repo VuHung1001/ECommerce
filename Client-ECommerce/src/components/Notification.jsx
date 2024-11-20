@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './notification.css'
-import { resetNotify } from '../redux/notifyRedux';
+import { setNotify, resetNotify } from '../redux/notifyRedux';
 
 const Notification = ({ title = "", message = "", type = "info", duration = 10000 }) => {
   const { notifies, notifyStatus, notifyDuration } = useSelector((state) => state.notify);
@@ -31,6 +31,12 @@ const Notification = ({ title = "", message = "", type = "info", duration = 1000
         // Remove toast when clicked
         toast.onclick = function (e) {
           if (e.target.closest(".toast__close")) {
+            const newNotifies = notifies.filter(({notifyMess}) => notifyMess !== message);
+            if (newNotifies.length) {
+              dispatch(setNotify({notifies: newNotifies}));
+            } else {
+              dispatch(setNotify({notifies: [], status: false}));
+            }
             main.removeChild(toast);
             window.clearTimeout(autoRemoveId);
           }
@@ -68,11 +74,12 @@ const Notification = ({ title = "", message = "", type = "info", duration = 1000
     if (title !=='' && message !== '') toast(message, type, title, duration);
 
     if (notifies.length && notifyStatus) {
+      if (toastRef.current) toastRef.current.innerHTML = '';
       notifies.forEach(({notifyMess, notifyType, notifyTitle}) => {
         toast(notifyMess, notifyType, notifyTitle, notifyDuration);
       })
     }
-  }, [duration, message, title, type, notifies, notifyStatus, notifyDuration])
+  }, [duration, message, title, type, notifies, notifyStatus, notifyDuration, dispatch])
 
   useEffect(() => {
     // This return function is called when the component unmounts
