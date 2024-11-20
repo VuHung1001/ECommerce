@@ -31,6 +31,8 @@
   > **MY_MAIL_PASSWORD**  // google account application password for MY_MAIL
   > 
   > **BASE_URL**          // in my case: https://figures-shop.up.railway.app for production and http://localhost:5000 for developing
+  > 
+  > **DEVELOPING_FRONTEND_URL**          // The navigation page returns from MoMo (only used in developing) - http://localhost:3000 (Front-end Shopping page)
 
 - For ReactJS Client:
   >
@@ -45,10 +47,14 @@
   > **VITE_GOOGLE_CLIENT_ID**  // ID of Google Oauth to authorization when logging with Google
   >
   > **VITE_BASE_URL**          // Same as API .env
+  >
+  > **VITE_DEVELOPING_FRONTEND_PORT**          // Running port in developing
 
 - For ReactJS Admin: (It is not necessary on the production server because the VITE_BASE_URL env variable already exists in the client env section)
   >
   > **VITE_BASE_URL**          // Same as API .env
+  >
+  > **VITE_DEVELOPING_FRONTEND_PORT**          // Running port in developing  
 
 ## Switching between developing and production mode
 - Edit the **VITE_BASE_URL** in both .env of Admin and Client and **BASE_URL** in .env of API (https://figures-shop.up.railway.app for production and http://localhost:5000 for developing)
