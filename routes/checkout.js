@@ -14,7 +14,7 @@ const secretKey = process.env.MOMO_SECRET_KEY;
 const partnerCode = process.env.MOMO_PARTNER_CODE;
 const BASE_URL = process.env.NODE_ENV === 'production' 
   ? process.env.BASE_URL 
-  : process.env.DEVELOPING_FRONTEND_URL;
+  : process.env.DEVELOPING_FRONTEND_URL || 'http://localhost:3000';
 
 // use stripe api for payment handling
 router.post("/stripe", verifyToken, (req, res) => {
