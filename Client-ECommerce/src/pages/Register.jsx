@@ -83,7 +83,7 @@ const Register = () => {
 
         const usernameReg = new RegExp(/^(?!.*(!|@|#|\$|%|\^|&|\*|\(|\)|\+|=|`|~|'|"|;|:|,|<|\.|>|\/|\?))[a-zA-Z0-9\-_]{6,20}$/)
         const emailReg = new RegExp(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i)
-        const passwordReg = new RegExp(/^(?!.*(!|@|#|\$|%|\^|&|\*|\(|\)|\+|=|`|~|'|"|;|:|,|<|\.|>|\/|\?))(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/)
+        const passwordReg = new RegExp(/^[A-Za-z0-9_-]{8,20}$/)
         if(!usernameReg.test(username) || !emailReg.test(email) || !passwordReg.test(password) || password !== confirmPassword){
             if(!usernameReg.test(username)){
                 setNotifyMes('Your username should be between 6 and 20 characters'
@@ -99,9 +99,9 @@ const Register = () => {
                 return;
             }
             if(!passwordReg.test(password)){
-                setNotifyMes('Your password should be between 8 and 20 characters, which contain at least'
-                +'<br/> one uppercase, one lowercase letter, one number'
-                +' and may include the following characters : " - ", " _ "')
+                setNotifyMes('Your password should be between 8 and 20 characters, '
+                +'<br/> which contain letters, numbers'
+                +'<br/> and the following characters : " - ", " _ "')
                 setNotifyType('error')
                 setNotifyTitle('Validation error')
                 return;
