@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { login } from '../redux/apiCalls'
 import { mobile } from '../responsive'
 import {useDispatch, useSelector} from 'react-redux'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { reset } from '../redux/userRedux'
 import Notification from '../components/Notification'
 import LoginGoogle from '../components/LoginGoogle'
@@ -71,6 +71,7 @@ const Login = () => {
     const [notifyType, setNotifyType] = useState('info')
     const [notifyTitle, setNotifyTitle] = useState('')
     const location = useLocation();
+    const navigate = useNavigate();
 
     // Get the previous path from location state, default to homepage
     const previousPage = location.state?.from || "/";      
