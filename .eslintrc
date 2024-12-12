@@ -1,0 +1,46 @@
+{
+	"env": {
+	  "browser": true,
+	  "es2020": true,
+	  "node": true
+	},
+	"extends": [
+	  "eslint:recommended",
+	  "plugin:react/recommended",
+	  "plugin:react-hooks/recommended",
+	  "plugin:prettier/recommended"
+	],
+	"parserOptions": {
+	  "ecmaFeatures": {
+		"jsx": true
+	  },
+	  "ecmaVersion": 12,
+	  "sourceType": "module"
+	},
+	"plugins": [
+	  "react",
+	  "react-hooks",
+	  "import",
+	  "prettier"
+	],
+	"ignorePatterns": ["node_modules/**", "dist/**", "build/**"], // Use ignorePatterns for ignored directories
+	"overrides": [
+		{
+		  "files": ["**/*.{js,jsx,ts,tsx}"], // Specify the file extensions to lint here
+		  "rules": {
+			"react/react-in-jsx-scope": "off", // Vite doesn't require importing React in every file
+			"react/prop-types": "off", // Disable prop-types checking if you use TypeScript or don't use prop-types
+			"no-unused-vars": "warn", // Warn about unused variables
+			"import/no-unresolved": "error", // Ensure imports are resolved correctly
+			"jsx-a11y/alt-text": "warn", // Accessibility: Warn when <img> tags are missing alt attributes
+			"prettier/prettier": "error" // Ensure Prettier issues are reported as ESLint errors
+		  }
+		}
+	  ],
+	"settings": {
+	  "react": {
+		"version": "detect" // Automatically detect the React version
+	  }
+	}
+  }
+  

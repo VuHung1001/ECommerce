@@ -13,7 +13,8 @@
     "build": "npm run production-build",
     "heroku-postbuild": "(NPM_CONFIG_PRODUCTION=false); (npm install --prefix ./Client-ECommerce && npm run build ./Client-ECommerce); (npm install --prefix ./Admin-ECommerce && npm run build ./Admin-ECommerce)",
     "railway-build": "export NODE_OPTIONS=--openssl-legacy-provider && CI=false && npm run production-build",
-    "production-build": "npm install --omit=dev && cd Client-ECommerce && npm install && npm run build && cd .. && cd Admin-ECommerce && npm install && npm run build"
+    "production-build": "npm install --omit=dev && cd Client-ECommerce && npm install && npm run build && cd .. && cd Admin-ECommerce && npm install && npm run build",
+    "lint": "eslint ./Client-ECommerce/ ./Admin-ECommerce/"
   },
   "keywords": [],
   "author": "",
@@ -33,9 +34,8 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.16.0",
     "cross-env": "^7.0.3",
-    "eslint": "^9.16.0",
+    "eslint": "^8.50.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
@@ -45,6 +45,8 @@
     "eslint-plugin-rulesdir": "^0.2.2",
     "eslint-plugin-spellcheck": "^0.0.20",
     "globals": "^15.13.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "prettier": "^3.4.2",
+    "vite-plugin-eslint": "^1.8.1"
   }
 }
