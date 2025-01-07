@@ -198,8 +198,6 @@ const Navbar = ({ category }) => {
   useEffect(() => {
     const search = async () => {
       try {
-        /* eslint-disable-next-line */
-        debugger;
         const res = await publicRequest.get("/products");
         setSearchResults(res.data);
       } catch (err) {
