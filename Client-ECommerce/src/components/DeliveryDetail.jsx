@@ -3,8 +3,9 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAddressCart } from "../redux/cartRedux";
+import { Notify, resetNotify, setNotify } from "../redux/notifyRedux";
 import Notification from '../components/Notification'
 import "./delivery-detail.css";
 
@@ -24,11 +25,10 @@ const Button = styled.button`
 
 const DeliveryDetail = ({ displayDelivery, setDisplayDelivery, setAddress }) => {
   const cart = useSelector((state) => state.cart);
+  const { notifies, notifyStatus, notifyDuration } = useSelector((state) => state.notify);
   const [errors, setErrors] = useState([false, false, false ,false])
   const [addressObj, setAddressObj] = useState(null)
-  const [notifyMes, setNotifyMes] = useState('')
-  const [notifyType, setNotifyType] = useState('info')
-  const [notifyTitle, setNotifyTitle] = useState('')  
+  const dispatch = useDispatch();
 
   const disableDelivery = () => {
     setDisplayDelivery(false);
@@ -43,30 +43,53 @@ const DeliveryDetail = ({ displayDelivery, setDisplayDelivery, setAddress }) => 
     const note = document.querySelector('#delivery-note').value;
 
     const nameRegex = new RegExp(/^([aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ]{2,})+\s+([aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ\s]{2,})+$/i)
-    const addressRegex = new RegExp(/^([sSốỐ0-9a-zA-Z\s]{1,7})+[\s,.'-]+([aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ0-9\s,.'-]{3,7}){5,}$/i)
+    // const addressRegex = new RegExp(/^([sSốỐ0-9a-zA-Z\s]{1,7})+[\s,.'-]+([aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ0-9\s,.'-]{3,7}){5,}$/i)
+    const addressRegex = new RegExp(/^[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ0-9\s,'\(\)-]{3,100}(,?\s?[\(\)aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ\s]+)?(,?\s?[0-9a-zA-Z\s-]+)?$/i)
     const phoneRegex = new RegExp(/^[+\s]?[(]?[0-9]{2,4}[)]?[-\s.]?([0-9]{3}[-\s.]?){1,2}[0-9]{3,6}$/im)
     const emailRegex = new RegExp(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i)
 
+    const notifies = [];
     if(!nameRegex.test(name)){
-      setNotifyMes('Your full name must be correct and at least two words long')
-      setNotifyType('warning')
-      setNotifyTitle('Notice')      
+      notifies.push(
+        new Notify(
+          'Your full name must be correct and at least two words long', 
+          'warning', 
+          'Notice', 
+        )
+      ) 
     }
     if(!addressRegex.test(address)){
-      setNotifyMes('Address must be in the form:\n house number, road name, ward name, county name, city provinces')
-      setNotifyType('warning')
-      setNotifyTitle('Notice')      
+      notifies.push(
+        new Notify(
+          'Address must be in the form:\n house number, road name, ward name, county name, city provinces', 
+          'warning', 
+          'Notice', 
+        )
+      )       
     }
     if(!phoneRegex.test(phone)){
-      setNotifyMes('Mobile numbers have 11 numbers if including country code.\n If not, there are 10 numbers, the first number is zero')
-      setNotifyType('warning')
-      setNotifyTitle('Notice')      
+      notifies.push(
+        new Notify(
+          'Mobile numbers have 11 numbers if including country code.\n If not, there are 10 numbers, the first number is zero', 
+          'warning', 
+          'Notice', 
+        )
+      )       
     }
     if(!nameRegex.test(name)){
-      setNotifyMes('Email must be in the form: \n anyWord@hostName.com (org, etc...)')
-      setNotifyType('warning')
-      setNotifyTitle('Notice')      
+      notifies.push(
+        new Notify(
+          'Email must be in the form: \n anyWord@hostName.com (org, etc...)', 
+          'warning', 
+          'Notice', 
+        )
+      )       
     }
+
+    dispatch(resetNotify());
+    setTimeout(() => {
+      dispatch(setNotify({notifies, status: true}));
+    }, 0);
 
     setErrors([
       !nameRegex.test(name),
@@ -95,16 +118,14 @@ const DeliveryDetail = ({ displayDelivery, setDisplayDelivery, setAddress }) => 
   }, [displayDelivery, errors, setAddress, addressObj])
 
   return (
+    <>
+    {notifyStatus && notifies?.length && (
+        <Notification />       
+    )}    
     <div
       className="delivery-container"
       style={{ display: displayDelivery ? "block" : "none" }}
     >
-      <Notification 
-          title={notifyTitle}
-          message={notifyMes}
-          type={notifyType}
-          duration={20000}
-      />       
       <div className="paragraph">
         <p className="mb-0 fw-bold h4">
           <b>Insert delivery details</b>
@@ -171,6 +192,7 @@ const DeliveryDetail = ({ displayDelivery, setDisplayDelivery, setAddress }) => 
         <Button onClick={handleDeliveryDetail}>use momo wallet</Button>
       </Box>
     </div>
+    </>
   );
 };
 

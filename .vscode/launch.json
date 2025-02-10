@@ -1,0 +1,21 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+	  {
+		"type": "node",               				// Node.js type debugging
+		"request": "launch",          				// Start the application
+		"name": "Debug with Nodemon", 				// Name of the configuration
+		"runtimeExecutable": "nodemon", 			// Use nodemon to run the app
+		"program": "${workspaceFolder}\\index.js", 	// Main entry point of your app (adjust as needed)
+		"restart": true,              				// Automatically restart when file changes
+		"console": "integratedTerminal", 			// Show logs in VSCode's terminal
+		"internalConsoleOptions": "neverOpen",
+		"env": {
+		  "NODE_ENV": "development"    				// Set your environment variables
+		}
+	  }
+	]
+}

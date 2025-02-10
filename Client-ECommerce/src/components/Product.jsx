@@ -1,6 +1,6 @@
 import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@material-ui/icons'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { addProduct } from '../redux/cartRedux'
 import { mobile } from '../responsive'
@@ -88,6 +88,7 @@ const Span = styled.span``
 
 const Product = ({item}) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const currentPage = window.location.href.split('/')[3];
     
     const addToCart = (event)=>{
@@ -102,6 +103,12 @@ const Product = ({item}) => {
         event.preventDefault();        
     }
 
+    const redirectToProductPage = (event, item) => {
+        event.stopPropagation();
+        event.preventDefault();          
+        navigate(`/product/${item._id}`)
+    }
+
     return (
         <Container page={currentPage}>
             <Circle/>
@@ -111,11 +118,9 @@ const Product = ({item}) => {
                     <Icon onClick={addToCart}>
                         <ShoppingCartOutlined/>
                     </Icon>
-                    <Link to={`/product/${item._id}`}>
-                        <Icon>
-                            <SearchOutlined/>
-                        </Icon>
-                    </Link>
+                    <Icon onClick={(event) => redirectToProductPage(event, item)}>
+                        <SearchOutlined/>
+                    </Icon>
                     <Icon onClick={addToFavorite}>
                         <FavoriteBorderOutlined/>
                     </Icon>

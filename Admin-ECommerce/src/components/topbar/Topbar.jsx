@@ -24,7 +24,7 @@ export default function Topbar() {
     const authorize = async() =>{
       try{
         const res = await userRequest.get('/auth/authorize');
-        if(res?.data === 'Logged in'){
+        if(res?.data === 'authorized'){
           setMessage('Hello Admin')
           setType('success')
           setTitle('Welcome')        

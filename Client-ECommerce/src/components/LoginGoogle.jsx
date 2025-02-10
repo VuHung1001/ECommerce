@@ -1,4 +1,5 @@
 import {GoogleLogin} from 'react-google-login'
+import { useLocation, useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux'
 import axios from 'axios';
 import {useState, useEffect} from 'react'
@@ -13,6 +14,11 @@ const LoginGoogle = ()=>{
   const [notifyMes, setNotifyMes] = useState('')
   const [notifyType, setNotifyType] = useState('info')
   const [notifyTitle, setNotifyTitle] = useState('')
+  const navigate = useNavigate();
+  const location = useLocation();
+
+ // Get the previous path from location state, default to homepage
+ const previousPage = location.state?.from || "/";  
 
   const responseGoogle = async (res)=>{
     try {
@@ -43,7 +49,9 @@ const LoginGoogle = ()=>{
             user.password && login(dispatch, user);
           }
           const timeout = setTimeout(()=>{
-            !error && window.location.reload()
+            if (!error) {
+              navigate(previousPage);
+            }
             window.clearTimeout(timeout)
           }, 1000) 
   
@@ -53,11 +61,11 @@ const LoginGoogle = ()=>{
           setNotifyTitle('Notice')      
         }
       } else {
-        if (res?.error !== "popup_closed_by_user") {
-          setNotifyMes(res?.error)
-          setNotifyType('warning')
-          setNotifyTitle('Notice')           
-        }
+        // if (res?.error !== "popup_closed_by_user") {
+        //   setNotifyMes(res?.error)
+        //   setNotifyType('warning')
+        //   setNotifyTitle('Notice')           
+        // }
       }
     } catch(err){
       console.dir(err)

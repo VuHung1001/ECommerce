@@ -6,7 +6,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Success from "./pages/Success";
 import Momo from "./pages/MomoResult";
-import { useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   BrowserRouter as Router,
   Routes as Switch,
@@ -16,10 +16,54 @@ import {
 import './App.css'
 import Account from "./pages/Account";
 import AccountOrder from "./pages/AccountOrder";
+import { useEffect } from "react";
+import { resetNotify } from "./redux/notifyRedux";
+import { userRequest } from "./requestMethods";
+import { setAuthorized } from "./redux/userRedux";
 
 
 const App = () => {
-  const user = useSelector((state) => state.user.currentUser);
+  const isAuthorized= useSelector((state) => state.user.isAuthorized);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      dispatch(resetNotify());
+
+      // Custom message for the unload event
+      event.preventDefault();
+      event.returnValue = ""; // Required for older browsers
+    };
+
+    // Add the event listener for beforeunload
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    // Cleanup the event listener
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };    
+  }, [dispatch]);
+
+  useEffect(() => {
+    const authorize = async () => {
+      try {
+        const res = await userRequest.get("/auth/authorize");
+        if (res?.data === "authorized") {
+          dispatch(setAuthorized(true));
+        }
+      } catch (err) {
+        if (err?.response?.data === "Token is not valid!") {
+          dispatch(setAuthorized(false));
+        }
+        if (err?.response?.status === 401) {
+          dispatch(setAuthorized(false));
+        }
+      }
+    };
+
+    authorize();
+  }, [dispatch]);
+
   return (
     <Router>
       <Switch>
@@ -27,24 +71,26 @@ const App = () => {
         <Route exact path="/products" element={<ProductList/>}/>
         <Route exact path="/products/:category" element={<ProductList/>}/>
         <Route exact path="/product/:id" element={<Product/>}/>
-        <Route exact path="/login" element={
-          user ? <Navigate to={-1} /> : <Login/>
+        {/* <Route exact path="/login" element={
+          isAuthorized ? <Navigate to={-1} /> : <Login/>
         }/>
         <Route exact path="/register" element={
-          user ? <Navigate to={-1} /> : <Register/>
-        }/>
+          isAuthorized ? <Navigate to={-1} /> : <Register/>
+        }/> */}
+        <Route exact path="/login" element={<Login/>}/>
+        <Route exact path="/register" element={<Register/>}/>
         <Route exact path="/logout" element={<Home/>}/>
         <Route exact path="/cart" element={<Cart/>}/>
-        {user && (
+        {isAuthorized && (
           <Route exact path="/account/order/:orderId" element={<AccountOrder/>}/>
         )}
-        {user && (
+        {isAuthorized && (
           <Route exact path="/account" element={<Account/>}/>
         )}
-        {user && (
+        {isAuthorized && (
           <Route exact path="/success" element={<Success/>}/>
         )}
-        {user && (
+        {isAuthorized && (
           <Route exact path="/resultMomo" element={<Momo/>}/>
         )}
         <Route exact path="/*" element={<Navigate to='/'/>}/>

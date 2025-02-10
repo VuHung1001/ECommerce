@@ -1,13 +1,25 @@
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './notification.css'
+import { setNotify, resetNotify } from '../redux/notifyRedux';
 
-// source from f8 (fullstack.edu.vn)
 const Notification = ({ title = "", message = "", type = "info", duration = 10000 }) => {
+  const { notifies, notifyStatus, notifyDuration } = useSelector((state) => state.notify);
+  const toastRef = useRef();
+  const dispatch = useDispatch();
+
+  useLayoutEffect(() => {
+    if (!notifies.length || !notifyStatus) {
+      if (toastRef.current) {
+        toastRef.current.innerHTML = '';
+      }
+    }
+  }, [notifies, notifyStatus]);
 
   useEffect(()=> {
     // Toast function
-    function toast() {
-      const main = document.getElementById("toast");
+    function toast(message, type, title, duration) {
+      const main = toastRef.current;
       if (main) {
         const toast = document.createElement("div");
 
@@ -19,6 +31,12 @@ const Notification = ({ title = "", message = "", type = "info", duration = 1000
         // Remove toast when clicked
         toast.onclick = function (e) {
           if (e.target.closest(".toast__close")) {
+            const newNotifies = notifies.filter(({notifyMess}) => notifyMess !== message);
+            if (newNotifies.length) {
+              dispatch(setNotify({notifies: newNotifies}));
+            } else {
+              dispatch(setNotify({notifies: [], status: false}));
+            }
             main.removeChild(toast);
             window.clearTimeout(autoRemoveId);
           }
@@ -53,20 +71,25 @@ const Notification = ({ title = "", message = "", type = "info", duration = 1000
       }
     }
 
-    title !=='' && message !== '' && toast()
-  }, [duration, message, title, type])
+    if (title !=='' && message !== '') toast(message, type, title, duration);
 
-  // function showSuccessToast() {
-  //   toast({
-  //     title: "Thành công!",
-  //     message: "Bạn đã đăng ký thành công tài khoản tại F8.",
-  //     type: "warning",
-  //     duration: 5000,
-  //   });
-  // }
+    if (notifies.length && notifyStatus) {
+      if (toastRef.current) toastRef.current.innerHTML = '';
+      notifies.forEach(({notifyMess, notifyType, notifyTitle}) => {
+        toast(notifyMess, notifyType, notifyTitle, notifyDuration);
+      })
+    }
+  }, [duration, message, title, type, notifies, notifyStatus, notifyDuration, dispatch])
+
+  useEffect(() => {
+    // This return function is called when the component unmounts
+    return () => {
+      dispatch(resetNotify());
+    };
+  }, [dispatch]);
 
   return (
-      <div id="toast"></div>
+      <div className="toast-container" ref={toastRef}></div>
   );
 };
 

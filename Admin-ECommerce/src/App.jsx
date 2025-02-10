@@ -35,6 +35,9 @@ function App() {
         <Switch>
           <Route path="/admin/login" exact element={<Login />}/>
           <Route path="/admin/*" exact element={<Navigate to="/admin/login"/>}/>
+          {process.env.NODE_ENV === 'development' && (
+            <Route path="/*" exact element={<Navigate to="/admin/login"/>}/>
+          )}          
         </Switch>
       )}
       {isAdmin && TOKEN && (
@@ -52,6 +55,9 @@ function App() {
             <Route path="/admin/newproduct" exact element={<NewProduct />}/>
             <Route path="/admin/order/:orderId" exact element={<Order />}/>
             <Route path="/admin/*" exact element={<Navigate to="/admin"/>}/>
+            {process.env.NODE_ENV === 'development' && (
+              <Route path="/*" exact element={<Navigate to="/admin"/>}/>
+            )}            
           </Switch>
         </div>
         </>

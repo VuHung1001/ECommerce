@@ -5,7 +5,8 @@ const userRedux = createSlice({
     initialState: {
         currentUser: null,
         isFetching: false,
-        error: false
+        error: false,
+        isAuthorized: false
     },
     reducers: {
         loginStart: (state) => {
@@ -14,6 +15,7 @@ const userRedux = createSlice({
         loginSuccess: (state, action) => {
             state.isFetching = false
             state.currentUser = action.payload
+            state.isAuthorized = true
         },
         loginFailure: (state) => {
             state.isFetching = false
@@ -23,6 +25,7 @@ const userRedux = createSlice({
             state.currentUser = null;
             state.isFetching = false;
             state.error = false;
+            state.isAuthorized = false;
         },
 
         registerStart: (state) => {
@@ -41,9 +44,14 @@ const userRedux = createSlice({
             state.currentUser= null
             state.isFetching= false
             state.error= false
+            state.isAuthorized = false
+        },
+
+        setAuthorized: (state, action) => {
+            state.isAuthorized = action.payload;
         }
     }
 })
 
-export const {loginStart, loginSuccess, loginFailure, logout, registerStart, registerFailure, registerSuccess, reset} = userRedux.actions
+export const {loginStart, loginSuccess, loginFailure, logout, registerStart, registerFailure, registerSuccess, reset, setAuthorized} = userRedux.actions
 export default userRedux.reducer;

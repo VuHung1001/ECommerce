@@ -29,9 +29,9 @@ const SelectPayment = (props) => {
       setNotifyTitle('Notice')    
 
       const timeout = setTimeout(()=>{
-        navigate('/login')
+        navigate('/login', { state: { from: location.pathname } })
         window.clearTimeout(timeout)
-      }, 4000)
+      }, 3000)
     }
     if (cart.total <= 0){
       setNotifyMes('Your cart is empty, please buy some our products first')
@@ -50,9 +50,9 @@ const SelectPayment = (props) => {
       setNotifyTitle('Notice')    
 
       const timeout = setTimeout(()=>{
-        navigate('/login')
+        navigate('/login', { state: { from: location.pathname } })
         window.clearTimeout(timeout)
-      }, 4000)
+      }, 3000)
     }
     if (cart.total <= 0){
       setNotifyMes('Your cart is empty, please buy some our products first')
@@ -89,7 +89,7 @@ const SelectPayment = (props) => {
             setNotifyTitle('Notice')             
 
             const timeout = setTimeout(()=>{
-              navigate('/login')
+              navigate('/login', { state: { from: location.pathname } })
               window.clearTimeout(timeout)
             }, 4000)
           }

@@ -98,7 +98,7 @@ const DeleteContainer = styled.div`
 const DeleteButton = styled.div`
   display: flex;
   align-items: center;
-  overflow: auto;
+  ${'' /* overflow: auto; */}
   transition: all 0.5s ease;
   &:hover {
     cursor: pointer;      
@@ -212,9 +212,9 @@ const Cart = () => {
         setType('warning')
         setTitle('Notice')
         const timeout = setTimeout(()=>{
-          navigate('/login')
+          navigate('/login', { state: { from: location.pathname } })
           window.clearTimeout(timeout)
-        }, 4000)
+        }, 3000)
     }
     document.querySelector(".payment-container").style.display = "block";
   };

@@ -4,7 +4,6 @@
 .env.test.*
 .env.production.*
 node_modules
-.vscode
 yarn.lock
 mp3
 readme.txt
