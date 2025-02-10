@@ -5,9 +5,13 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { webcrypto } from 'crypto';
+import { Buffer } from 'buffer'
 
 if (typeof window === 'undefined') {
   globalThis.crypto = webcrypto;
+}
+if (!window.Buffer) {
+  window.Buffer = Buffer
 }
 ReactDOM.render(
   <Provider store={store}>
