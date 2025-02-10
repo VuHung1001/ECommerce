@@ -7,7 +7,7 @@ import {removeCart} from '../redux/cartRedux'
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
-import crypto from 'crypto-js';
+import CryptoJS from 'crypto-js';
 
 function Momo() {
   const [resultMessage, setResultMessage] = useState('')
@@ -42,7 +42,7 @@ function Momo() {
   //   .digest("hex");
   
   // create our signature
-  const signature = crypto.HmacSHA256(params, secretKey).toString(crypto.enc.Hex);
+  const signature = CryptoJS.HmacSHA256(params, secretKey).toString(CryptoJS.enc.Hex);
 
 
   useEffect(()=> {

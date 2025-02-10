@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import {nodePolyfills} from 'vite-plugin-node-polyfills'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -16,6 +17,10 @@ export default defineConfig({
         ]
       }    
     }),
+    nodePolyfills({
+      // Specify polyfills if needed
+      include: ['crypto']
+    })
     // eslintPlugin()  // Add this line to include the ESLint plugin
   ],
   build: { 
