@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
+    "babel-plugin-styled-components": "^2.1.4",
     "vite": "^5.4.1"
   },
   "scripts": {
