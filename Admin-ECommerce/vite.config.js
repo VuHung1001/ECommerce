@@ -29,6 +29,14 @@ export default defineConfig({
           }
         },
       },
+      plugins: [
+        {
+          name: 'polyfill-node-crypto',
+          resolveId(source) {
+            return source === 'crypto' ? 'crypto-browserify' : null;
+          }
+        }
+      ]      
     },
   }, 
   server: {
