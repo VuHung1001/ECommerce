@@ -7,7 +7,6 @@ import {removeCart} from '../redux/cartRedux'
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
-import CryptoJS from 'crypto-js';
 
 function Momo() {
   const [resultMessage, setResultMessage] = useState('')
@@ -21,7 +20,7 @@ function Momo() {
   const [amount, setAmount] = useState();
   const [orderId, setOrderId] = useState(null);
   const [isMailSended, setIsMailSended] = useState(false);
-  // const crypto = require("crypto");
+  const crypto = require("crypto");
   const navigate = useNavigate()
   
   // get raw signature from query parameters
@@ -36,13 +35,10 @@ function Momo() {
     +params.substring(0, params.length -1);
     
   // create our signature
-  // const signature = crypto
-  //   .createHmac("sha256", secretKey)
-  //   .update(params)
-  //   .digest("hex");
-  
-  // create our signature
-  const signature = CryptoJS.HmacSHA256(params, secretKey).toString(CryptoJS.enc.Hex);
+  const signature = crypto
+    .createHmac("sha256", secretKey)
+    .update(params)
+    .digest("hex");
 
 
   useEffect(()=> {
@@ -58,12 +54,9 @@ function Momo() {
     } 
     
     // decode address
-    // let address = JSON.parse(Buffer.from(
-    //   searchParams.get('extraData'), 'base64'
-    // ).toString('utf8'))
-
-    // decode address
-    let address = JSON.parse(atob(searchParams.get('extraData')));
+    let address = Buffer.from(
+      searchParams.get('extraData'), 'base64'
+    ).toString('utf8')
       
     // create order, remove cart after creating order
     const createOrder = async () => {
@@ -77,10 +70,11 @@ function Momo() {
             quantity: item.quantity,
           })),
           amount: cart.total + 20000,
-          address: address,
+          address: JSON.parse(address),
         });
         
         //send mail to user
+        address = JSON.parse(address)
         let userMail = address?.email ? address.email : currentUser?.email;
         
         let mailText = `  \nHello ${address?.name}
