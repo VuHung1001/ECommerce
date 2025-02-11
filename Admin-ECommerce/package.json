@@ -12,6 +12,8 @@
     "@mui/styles": "^5.4.1",
     "@reduxjs/toolkit": "^1.7.1",
     "axios": "^0.24.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.1",
     "firebase": "^9.6.1",
     "javascript-time-ago": "^2.3.10",
     "react": "^17.0.2",
@@ -21,6 +23,7 @@
     "react-router-dom": "^6.2.1",
     "recharts": "^2.1.8",
     "redux-persist": "^6.0.0",
+    "stream-browserify": "^3.0.0",
     "timeago.js": "^4.0.2",
     "vite-plugin-node-polyfills": "^0.23.0",
     "web-vitals": "^2.1.2"

@@ -19,10 +19,25 @@ export default defineConfig({
     }),
     nodePolyfills({
       // Specify polyfills if needed
-      include: ['crypto']
+      include: ['crypto', 'stream', 'util', 'buffer'],
+      globals: { Buffer: true }
     })    
     // eslintPlugin()  // Add this line to include the ESLint plugin
   ],
+  resolve: {
+    alias: {
+      crypto: 'crypto-browserify',
+      stream: 'stream-browserify',
+      buffer: 'buffer/'
+    }
+  },  
+  optimizeDeps: {
+    esbuildOptions: {
+      define: {
+        global: 'globalThis'  // Fix global undefined
+      }
+    }
+  },    
   build: { 
     outDir: 'build', // Specify the output directory here
     rollupOptions: {
@@ -35,6 +50,10 @@ export default defineConfig({
         },
       },
     },
+    commonjsOptions: {
+      transformMixedEsModules: true,
+      include: [/node_modules/]
+    }    
   }, 
   server: {
     host: 'localhost',
