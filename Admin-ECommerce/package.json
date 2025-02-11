@@ -11,6 +11,7 @@
     "@mui/styles": "^5.4.1",
     "@reduxjs/toolkit": "^1.7.1",
     "axios": "^0.24.0",
+    "crypto": "npm:crypto-browserify",
     "firebase": "^9.6.1",
     "javascript-time-ago": "^2.3.10",
     "react": "^17.0.2",
@@ -20,12 +21,18 @@
     "react-router-dom": "^6.2.1",
     "recharts": "^2.1.8",
     "redux-persist": "^6.0.0",
+    "stream": "npm:stream-browserify",
     "timeago.js": "^4.0.2",
+    "util": "npm:util",
     "web-vitals": "^2.1.2"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.1",
-    "vite": "^5.4.1"
+    "@vitejs/plugin-react": "^3.1.0",
+    "babel-plugin-styled-components": "^2.1.4",
+    "crypto-browserify": "^3.12.1",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.5",
+    "vite": "^4.5.9"
   },
   "scripts": {
     "start": "vite",
@@ -34,8 +41,10 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:react-hooks/recommended",
+      "plugin:prettier/recommended"
     ]
   },
   "browserslist": {
@@ -51,6 +60,6 @@
     ]
   },
   "engines": {
-    "node": "16.13.1"
+    "node": "16"
   }
 }

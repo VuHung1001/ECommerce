@@ -31,8 +31,6 @@ const Products = ({filters}) => {
     useEffect(()=> {
         const getProducts = async () => {
             try{
-                /* eslint-disable-next-line */
-                debugger;
                 const res = (category && sort)
                     ? await publicRequest.get(
                         `/products?category=${category}&sort=${sort}`
