@@ -74,7 +74,7 @@ const SelectPayment = (props) => {
     if(address && clickedPayment){
       const callMomoApi = async()=>{
         try {
-          const res = await userRequest.post("/checkout/momo", {
+          const res = await userRequest().post("/checkout/momo", {
             amount: cart.total + 20000,
             address
           });

@@ -69,7 +69,7 @@ function Momo() {
     const createOrder = async () => {
       try {
         setAmount(cart.total)
-        const res = await userRequest.post("/orders", {
+        const res = await userRequest().post("/orders", {
           _id: searchParams.get('orderId'),
           userId: currentUser._id,
           products: cart.products.map((item) => ({

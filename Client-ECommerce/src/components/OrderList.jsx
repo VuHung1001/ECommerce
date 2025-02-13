@@ -23,7 +23,7 @@ export default function WidgetLg() {
   useEffect(() => {
     const getOrders = async () => {
       try {
-        const res = await userRequest.get("orders/find/"+user._id);
+        const res = await userRequest().get("orders/find/"+user._id);
 
         let list = res.data.sort((a,b)=>{
           return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()

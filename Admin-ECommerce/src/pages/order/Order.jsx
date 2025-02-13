@@ -31,7 +31,7 @@ export default function Order() {
   const handleUpdate = async (e) => {
     e.preventDefault()
     try {
-      const res = await userRequest.put("/orders/"+orderId, order);
+      const res = await userRequest().put("/orders/"+orderId, order);
       setOrder(res.data);
       setNotifyMes('Update order successful')
       setNotifyType('success')
@@ -103,7 +103,7 @@ export default function Order() {
 
     const getOrder = async () => {
       try {
-        const res = await userRequest.get("/orders/"+orderId);
+        const res = await userRequest().get("/orders/"+orderId);
         setOrder(res.data);
       } catch(err) {
         console.dir(err);

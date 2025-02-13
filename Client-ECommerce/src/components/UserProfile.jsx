@@ -38,7 +38,7 @@ export default function User() {
   useEffect(()=>{
     const getPassword = async () => {
       try {
-        const res = await userRequest.get("users/findPassword/"+user._id);
+        const res = await userRequest().get("users/findPassword/"+user._id);
         if(res.data === 'Admin should not see his or someone else password')
           setPassword(null);
         else 

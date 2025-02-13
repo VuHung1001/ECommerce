@@ -47,7 +47,7 @@ const App = () => {
   useEffect(() => {
     const authorize = async () => {
       try {
-        const res = await userRequest.get("/auth/authorize");
+        const res = await userRequest().get("/auth/authorize");
         if (res?.data === "authorized") {
           dispatch(setAuthorized(true));
         }
