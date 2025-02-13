@@ -86,7 +86,7 @@ export default function Order() {
   useEffect(()=>{
     const getOrder = async () => {
       try {
-        const res = await userRequest.get("/orders/"+orderId+'/'+user?._id);
+        const res = await userRequest().get("/orders/"+orderId+'/'+user?._id);
         setOrder(res.data);
       } catch(err) {
         console.dir(err);

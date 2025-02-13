@@ -240,7 +240,7 @@ const Cart = () => {
   useEffect(() => {
     const makeStripeRequest = async () => {
       try {
-        const res = await userRequest.post("/checkout/stripe", {
+        const res = await userRequest().post("/checkout/stripe", {
           tokenId: stripeToken.id,
           amount: cart.total + 20000,
         });

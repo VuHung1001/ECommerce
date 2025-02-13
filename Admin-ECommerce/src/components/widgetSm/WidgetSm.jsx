@@ -15,7 +15,7 @@ export default function WidgetSm() {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const res = await userRequest.get("users/?new=true");
+        const res = await userRequest().get("users/?new=true");
         setUsers(res.data);
         setTotalPage(Math.ceil(res.data.length / rowPerPage))
       } catch (err){console.dir(err)}

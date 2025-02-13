@@ -28,7 +28,7 @@ export default function WidgetLg() {
     obj.status = e.target.value
     
     try {
-      const res = await userRequest.put("/orders/"+obj?._id, obj);
+      const res = await userRequest().put("/orders/"+obj?._id, obj);
       setOrders((prev)=>{
         let orderArr = [...prev]
         orderArr[i] = {...res.data}
@@ -49,7 +49,7 @@ export default function WidgetLg() {
   useEffect(() => {
     const getOrders = async () => {
       try {
-        const res = await userRequest.get("orders");
+        const res = await userRequest().get("orders");
 
         let list = res.data.sort((a,b)=>{
           return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()

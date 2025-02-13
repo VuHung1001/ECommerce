@@ -45,7 +45,7 @@ export const getProducts = async (dispatch) => {
 export const deleteProduct = async (id, dispatch) => {
   dispatch(deleteProductStart());
   try {
-    // const res = await userRequest.delete(`/products/${id}`);
+    // const res = await userRequest().delete(`/products/${id}`);
     dispatch(deleteProductSuccess(id));
   } catch (err) {
     console.dir(err)
@@ -56,7 +56,7 @@ export const deleteProduct = async (id, dispatch) => {
 export const updateProduct = async (id, product, dispatch) => {
   dispatch(updateProductStart());
   try {
-    const res = await userRequest.put(`/products/${id}`, product);
+    const res = await userRequest().put(`/products/${id}`, product);
     dispatch(updateProductSuccess({ id, product: res.data }));
   } catch (err) {
     console.dir(err)
@@ -67,7 +67,7 @@ export const updateProduct = async (id, product, dispatch) => {
 export const addProduct = async (product, dispatch) => {
   dispatch(addProductStart());
   try {
-    const res = await userRequest.post(`/products`, product);
+    const res = await userRequest().post(`/products`, product);
     dispatch(addProductSuccess(res.data));
   } catch (err) {
     console.dir(err)
@@ -78,7 +78,7 @@ export const addProduct = async (product, dispatch) => {
 export const getAllUsers = async (dispatch) => {
   dispatch(getAllUsersStart());
   try {
-    const res = await userRequest.get("/users");
+    const res = await userRequest().get("/users");
     dispatch(getAllUsersSuccess(res.data));
   } catch (err) {
     console.dir(err)

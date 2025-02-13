@@ -31,7 +31,7 @@ export default function Home() {
   useEffect(() => {
     const getStats = async () => {
       try {
-        const res = await userRequest.get("/users/stats");
+        const res = await userRequest().get("/users/stats");
         res.data.map((item) =>
           setUserStats((prev) => [
             ...prev,
